@@ -43,9 +43,10 @@ tags: ["tutorial"]
           |- hello-world.Rmd
           |- hello-world.html
       |- project/
-  |- data
-  |- layouts
-  |- public
+  |- data/
+  |- docs/
+  |- layouts/
+  |- public/
   |- static
       |- img/
   |- themes/
@@ -64,9 +65,9 @@ tags: ["tutorial"]
 <h2>dataおよびstaticフォルダ</h2>
 <p>staticフォルダはブログ全体で利用する画像やcssなどの静的なファイルを保存するのに向く。dataフォルダはRで使うデータを置いておくと良いのかも（公開されることに留意）。</p>
 </div>
-<div id="public" class="section level2">
-<h2>publicフォルダ</h2>
-<p><code>serve_site()</code>を実行すると、configやthemeの設定に従い、contentフォルダの内容がpublicフォルダに反映される。</p>
+<div id="publicdocs" class="section level2">
+<h2>publicおよびdocsフォルダ</h2>
+<p><code>serve_site()</code>を実行すると、configやthemeの設定に従い、contentフォルダの内容がpublicフォルダに反映される。<strong>このフォルダの内容をdocsフォルダに移動することでページが公開される</strong>。</p>
 </div>
 <div id="themes" class="section level2">
 <h2>themes</h2>
@@ -89,7 +90,7 @@ tags: [&quot;sample&quot;]
 library(&quot;yeah&quot;)
 teramonagi()</code></pre>
 <p><img src="#####../content/post/hello-world_files/figure-html/teramonagi_san-1.png" width="672" /></p>
-<p>記事が完成したら<code>serve_site()</code>を実行。表示を確認してGitHubにプッシュすることで公開となる。</p>
+<p>記事が完成したら<code>serve_site()</code>を実行。表示を確認し、publicフォルダを丸ごとdocsフォルダとしてコピー、GitHubにプッシュすることで公開となる。</p>
 <p>Enjoy!</p>
 </div>
 

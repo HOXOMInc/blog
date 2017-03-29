@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns#">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>ホクソエムブログの作り方 &middot; </title>
+        <meta name="description" content="ホクソエム公式ブログは次の方法で構築されました。備忘録として記録しておきます。またRMarkdownを使った更新方法についてもまとめます。 シ">
+        <meta name="HandheldFriendly" content="True">
+        <meta name="MobileOptimized" content="320">
+        <meta name="generator" content="Hugo 0.18.1" />
+        <meta name="robots" content="index,follow">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta property="og:title" content="ホクソエムブログの作り方">
+<meta property="og:description" content="ホクソエム公式ブログは次の方法で構築されました。備忘録として記録しておきます。またRMarkdownを使った更新方法についてもまとめます。 シ">
+<meta property="og:type" content="article">
+<meta property="og:url" content="/2017/03/29/hello-world/">
+        <link rel="stylesheet" href="/dist/styles.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,600,700,300&subset=latin,cyrillic-ext,latin-ext,cyrillic">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        
+
+
+
+
+
+
+    </head>
+    <body>
+        
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'XXX', 'auto');
+ga('send', 'pageview');
+</script>
+
+
+        <div id="wrapper">
+            <header class="site-header">
+                <div class="container">
+                    <div class="site-title-wrapper">
+                        
+                            <h1 class="site-title">
+                                <a title="株式会社ホクソエムのブログ" href="/">株式会社ホクソエムのブログ</a>
+                            </h1>
+                        
+                        <a class="button-square" href="/index.xml"><i class="fa fa-rss"></i></a>
+                        
+                            <a class="button-square button-social hint--top" data-hint="Twitter" title="Twitter" href="https://twitter.com/hoxom_inc">
+                                <i class="fa fa-twitter"></i>
+                            </a>
+                        
+                        
+                        
+                            <a class="button-square button-social hint--top" data-hint="Github" title="Github" href="https://github.com/HOXOMInc">
+                                <i class="fa fa-github-alt"></i>
+                            </a>
+                        
+                        
+                        
+                        
+                        
+                    </div>
+
+                    <ul class="site-nav">
+                        
+    <li class="site-nav-item">
+        <a title="Blog" href="/">Blog</a>
+    </li>
+
+    <li class="site-nav-item">
+        <a title="Contact" href="/page/contact/">Contact</a>
+    </li>
+
+    <li class="site-nav-item">
+        <a title="About" href="/page/about/">About</a>
+    </li>
+
+                    </ul>
+                </div>
+            </header>
+
+            <div id="container">
+
+
+<div class="container">
+    <article class="post-container" itemscope="" itemtype="http://schema.org/BlogPosting">
+        <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">ホクソエムブログの作り方</h1>
+    
+    <p class="post-date">
+        <span>Published <time datetime="2017-03-29" itemprop="datePublished">Wed, Mar 29, 2017</time></span>
+        <span>by</span>
+        <span itemscope="" itemprop="author" itemtype="https://schema.org/Person">
+            <span itemprop="name">
+                <a href="" itemprop="url" rel="author">Shinya Uryu</a>
+            </span>
+        </span>
+    </p>
+</header>
+
+        <div class="post-content clearfix" itemprop="articleBody">
+    
+
+
+
+<p><img src='../../../../../../../img/hoxom_inc_logo_crop250.png' align='center'></p>
+<p>ホクソエム公式ブログは次の方法で構築されました。備忘録として記録しておきます。またRMarkdownを使った更新方法についてもまとめます。</p>
+<div class="section level1">
+<h1>システム</h1>
+<ul>
+<li>GitHub Pages (ホスティング)</li>
+<li><a href="https://github.com/rstudio/blogdown">blogdown</a> (RMarkdown + Hugo)</li>
+</ul>
+</div>
+<div id="blogdown" class="section level1">
+<h1>blogdownのインストールと設定</h1>
+<pre class="r"><code>devtools::install_github(&quot;rstudio/blogdown&quot;)</code></pre>
+<p>GitHubからblogdownパッケージをインストール。ローカルにhugoシステムが構築されている必要があるため、hugoをインストールしていない場合は次のコマンドを実行のこと。</p>
+<pre class="r"><code>blogdown::install_hugo()</code></pre>
+<p>テーマは<a href="https://github.com/rstudio/blogdown">いくつか選べる</a>が、ページ構成がblogdownパッケージと相性が悪いテーマもあるため注意が必要。今回は<a href="http://themes.gohugo.io/ghostwriter/">ghostwriter</a>テーマを採用した。</p>
+<p><code>blogdown::new_site()</code>のtheme引数に該当のテーマリポジトリを入力して実行すると、ブログに必要なファイルや構築される。</p>
+<pre class="r"><code>library(blogdown)</code></pre>
+<pre class="r"><code>new_site(sample = FALSE, 
+         theme  = &quot;jbub/ghostwriter&quot;)</code></pre>
+<p>RStudioを利用している場合、<code>blogdown::new_site()</code>を実行した段階でViewerパネルにブログページが表示される。これはブログをプレビューする<code>serve_site()</code>の実行結果となっている。</p>
+<div class="section level2">
+<h2>ディレクトリ構成</h2>
+<p>簡単に説明。</p>
+<pre><code>blog/
+  |- archetypes/
+  |- config.toml
+  |- config.yaml
+  |- content/
+      |- page/
+      |- post/
+          |- hello-world.Rmd
+          |- hello-world.html
+      |- project/
+  |- data/
+  |- docs/
+  |- layouts/
+  |- public/
+  |- static
+      |- img/
+  |- themes/
+      |- ghostwriter/</code></pre>
+<div id="config.toml-config.yaml" class="section level3">
+<h3>config.toml, config.yaml</h3>
+<p>ブログの大まかな設定。SNS連携や独立ページなどの管理。linkedinなども紐付けられるが、今はしていない。</p>
+<p>大事そうなこととして、個別ページのURLは<code>/:year/:month/:day/:filename/</code>という形式になっている。</p>
+</div>
+<div id="content" class="section level3">
+<h3>contentフォルダ</h3>
+<p>ここに書いた記事やファイルの内容が<code>serve_site()</code>実行時に反映される。<strong>重要</strong>。</p>
+</div>
+</div>
+<div id="datastatic" class="section level2">
+<h2>dataおよびstaticフォルダ</h2>
+<p>staticフォルダはブログ全体で利用する画像やcssなどの静的なファイルを保存するのに向く。dataフォルダはRで使うデータを置いておくと良いのかも（公開されることに留意）。</p>
+</div>
+<div id="publicdocs" class="section level2">
+<h2>publicおよびdocsフォルダ</h2>
+<p><code>serve_site()</code>を実行すると、configやthemeの設定に従い、contentフォルダの内容がpublicフォルダに反映される。<strong>このフォルダの内容をdocsフォルダに移動することでページが公開される</strong>。</p>
+</div>
+<div id="themes" class="section level2">
+<h2>themes</h2>
+<p>テーマファイルが置かれている。ブログ全体のレイアウトやデザインを変更する場合にはこの中のファイルをいじくることになる。</p>
+</div>
+</div>
+<div class="section level1">
+<h1>記事の追加・更新</h1>
+<p>RMarkdownで書く。</p>
+<pre><code>---
+title: &quot;ホクソエムブログの作り方&quot;
+author: &quot;Shinya Uryu&quot;
+date: 2017-03-29T19:40:14-09:00
+tags: [&quot;sample&quot;]
+---</code></pre>
+<p>というyamlフロントマターをテンプレートとして用いる。tagsの部分は<code>[&quot;hoge&quot;, &quot;fuga&quot;, &quot;piyo&quot;]</code>のようにクオテーションで囲み、カンマ区切りで記述することで、<code>tags/hoge</code>ページに記事がまとめられる。</p>
+<pre class="r"><code>print(&quot;teramonagi&quot;)</code></pre>
+<pre><code>## [1] &quot;teramonagi&quot;</code></pre>
+<pre class="r"><code># plotはそのまま貼り付けられる
+library(&quot;yeah&quot;)
+teramonagi()</code></pre>
+<p><img src="figures/teramonagi_san-1.png" width="672" /></p>
+<p>記事が完成したら<code>serve_site()</code>を実行。表示を確認し、publicフォルダを丸ごとdocsフォルダとしてコピー、GitHubにプッシュすることで公開となる。</p>
+<p>Enjoy!</p>
+</div>
+
+
+
+
+</div>
+
+        <footer class="post-footer clearfix">
+    
+        <p class="post-tags">
+            <span>Tagged:</span>
+            
+            
+                <a href="/tags/tutorial/">tutorial</a>
+            
+        </p>
+    
+
+    <div class="share">
+        
+            <a class="icon-twitter" href="https://twitter.com/share?text=%e3%83%9b%e3%82%af%e3%82%bd%e3%82%a8%e3%83%a0%e3%83%96%e3%83%ad%e3%82%b0%e3%81%ae%e4%bd%9c%e3%82%8a%e6%96%b9&url=%2f2017%2f03%2f29%2fhello-world%2f"
+                onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                <i class="fa fa-twitter"></i>
+                <span class="hidden">Twitter</span>
+            </a>
+        
+
+        
+            <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=%2f2017%2f03%2f29%2fhello-world%2f"
+                onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                <i class="fa fa-facebook"></i>
+                <span class="hidden">Facebook</span>
+            </a>
+        
+
+        
+            <a class="icon-google-plus" href="https://plus.google.com/share?url=%2f2017%2f03%2f29%2fhello-world%2f"
+              onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+              <i class="fa fa-google-plus"></i>
+                <span class="hidden">Google+</span>
+            </a>
+        
+        
+    </div>
+</footer>
+
+        
+    </article>
+</div>
+
+            </div>
+        </div>
+
+        <footer class="footer">
+            <div class="container">
+                <div class="site-title-wrapper">
+                    <h1 class="site-title">
+                        <a title="株式会社ホクソエムのブログ" href="/">株式会社ホクソエムのブログ</a>
+                    </h1>
+                    <a class="button-square button-jump-top js-jump-top" href="#">
+                        <i class="fa fa-angle-up"></i>
+                    </a>
+                </div>
+
+                <p class="footer-copyright">
+                    <span>&copy; HOXOM, Inc. 2017 / Powered by <a href="https://gohugo.io/">Hugo</a></span>
+                </p>
+                <p class="footer-copyright">
+                    <span><a href="https://github.com/roryg/ghostwriter">Ghostwriter theme</a> By <a href="http://jollygoodthemes.com">JollyGoodThemes</a></span>
+                    <span>/ <a href="https://github.com/jbub/ghostwriter">Ported</a> to Hugo By <a href="https://github.com/jbub">jbub</a></span>
+                </p>
+            </div>
+        </footer>
+
+        <script src="/js/jquery-1.11.3.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js"></script>
+        <script src="/js/jquery.fitvids.js"></script>
+        <script src="/js/scripts.js"></script>
+    </body>
+</html>
+

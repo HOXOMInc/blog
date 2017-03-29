@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tutorial on 株式会社ホクソエムのブログ</title>
+    <link>/tags/tutorial/index.xml</link>
+    <description>Recent content in Tutorial on 株式会社ホクソエムのブログ</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-JP</language>
+    <copyright>HOXOM, Inc.</copyright>
+    <atom:link href="/tags/tutorial/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>ホクソエムブログの作り方</title>
+      <link>/2017/03/29/hello-world/</link>
+      <pubDate>Wed, 29 Mar 2017 19:40:14 -0900</pubDate>
+      
+      <guid>/2017/03/29/hello-world/</guid>
+      <description>&lt;!-- BLOGDOWN-BODY-BEFORE
+
+/BLOGDOWN-BODY-BEFORE --&gt;
+
+&lt;p&gt;&lt;img src=&#39;../../../../../../../img/hoxom_inc_logo_crop250.png&#39; align=&#39;center&#39;&gt;&lt;/p&gt;
+&lt;p&gt;ホクソエム公式ブログは次の方法で構築されました。備忘録として記録しておきます。またRMarkdownを使った更新方法についてもまとめます。&lt;/p&gt;
+&lt;div class=&#34;section level1&#34;&gt;
+&lt;h1&gt;システム&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;GitHub Pages (ホスティング)&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/rstudio/blogdown&#34;&gt;blogdown&lt;/a&gt; (RMarkdown + Hugo)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;blogdown&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;blogdownのインストールと設定&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;devtools::install_github(&amp;quot;rstudio/blogdown&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;GitHubからblogdownパッケージをインストール。ローカルにhugoシステムが構築されている必要があるため、hugoをインストールしていない場合は次のコマンドを実行のこと。&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;blogdown::install_hugo()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;テーマは&lt;a href=&#34;https://github.com/rstudio/blogdown&#34;&gt;いくつか選べる&lt;/a&gt;が、ページ構成がblogdownパッケージと相性が悪いテーマもあるため注意が必要。今回は&lt;a href=&#34;http://themes.gohugo.io/ghostwriter/&#34;&gt;ghostwriter&lt;/a&gt;テーマを採用した。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;blogdown::new_site()&lt;/code&gt;のtheme引数に該当のテーマリポジトリを入力して実行すると、ブログに必要なファイルや構築される。&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(blogdown)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;new_site(sample = FALSE, 
+         theme  = &amp;quot;jbub/ghostwriter&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;RStudioを利用している場合、&lt;code&gt;blogdown::new_site()&lt;/code&gt;を実行した段階でViewerパネルにブログページが表示される。これはブログをプレビューする&lt;code&gt;serve_site()&lt;/code&gt;の実行結果となっている。&lt;/p&gt;
+&lt;div class=&#34;section level2&#34;&gt;
+&lt;h2&gt;ディレクトリ構成&lt;/h2&gt;
+&lt;p&gt;簡単に説明。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;blog/
+  |- archetypes/
+  |- config.toml
+  |- config.yaml
+  |- content/
+      |- page/
+      |- post/
+          |- hello-world.Rmd
+          |- hello-world.html
+      |- project/
+  |- data/
+  |- docs/
+  |- layouts/
+  |- public/
+  |- static
+      |- img/
+  |- themes/
+      |- ghostwriter/&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;config.toml-config.yaml&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;config.toml, config.yaml&lt;/h3&gt;
+&lt;p&gt;ブログの大まかな設定。SNS連携や独立ページなどの管理。linkedinなども紐付けられるが、今はしていない。&lt;/p&gt;
+&lt;p&gt;大事そうなこととして、個別ページのURLは&lt;code&gt;/:year/:month/:day/:filename/&lt;/code&gt;という形式になっている。&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;content&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;contentフォルダ&lt;/h3&gt;
+&lt;p&gt;ここに書いた記事やファイルの内容が&lt;code&gt;serve_site()&lt;/code&gt;実行時に反映される。&lt;strong&gt;重要&lt;/strong&gt;。&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;datastatic&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;dataおよびstaticフォルダ&lt;/h2&gt;
+&lt;p&gt;staticフォルダはブログ全体で利用する画像やcssなどの静的なファイルを保存するのに向く。dataフォルダはRで使うデータを置いておくと良いのかも（公開されることに留意）。&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;publicdocs&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;publicおよびdocsフォルダ&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;serve_site()&lt;/code&gt;を実行すると、configやthemeの設定に従い、contentフォルダの内容がpublicフォルダに反映される。&lt;strong&gt;このフォルダの内容をdocsフォルダに移動することでページが公開される&lt;/strong&gt;。&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;themes&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;themes&lt;/h2&gt;
+&lt;p&gt;テーマファイルが置かれている。ブログ全体のレイアウトやデザインを変更する場合にはこの中のファイルをいじくることになる。&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&#34;section level1&#34;&gt;
+&lt;h1&gt;記事の追加・更新&lt;/h1&gt;
+&lt;p&gt;RMarkdownで書く。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;---
+title: &amp;quot;ホクソエムブログの作り方&amp;quot;
+author: &amp;quot;Shinya Uryu&amp;quot;
+date: 2017-03-29T19:40:14-09:00
+tags: [&amp;quot;sample&amp;quot;]
+---&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;というyamlフロントマターをテンプレートとして用いる。tagsの部分は&lt;code&gt;[&amp;quot;hoge&amp;quot;, &amp;quot;fuga&amp;quot;, &amp;quot;piyo&amp;quot;]&lt;/code&gt;のようにクオテーションで囲み、カンマ区切りで記述することで、&lt;code&gt;tags/hoge&lt;/code&gt;ページに記事がまとめられる。&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;print(&amp;quot;teramonagi&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;teramonagi&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# plotはそのまま貼り付けられる
+library(&amp;quot;yeah&amp;quot;)
+teramonagi()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;#####../content/post/hello-world_files/figure-html/teramonagi_san-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;記事が完成したら&lt;code&gt;serve_site()&lt;/code&gt;を実行。表示を確認し、publicフォルダを丸ごとdocsフォルダとしてコピー、GitHubにプッシュすることで公開となる。&lt;/p&gt;
+&lt;p&gt;Enjoy!&lt;/p&gt;
+&lt;/div&gt;
+
+
+
+&lt;!-- BLOGDOWN-HEAD
+
+
+
+
+
+
+/BLOGDOWN-HEAD --&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
