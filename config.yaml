@@ -1,4 +1,8 @@
 baseurl: http://example.org/
-languageCode: en-us
-title: My New Hugo Site
+languageCode: ja-JP
+title: HOXOM blog
+params:
+  CopyrightHTML: "Copyright &#xA9; 2017 HOXOM, Inc.. All Rights Reserved."
+  TwitterUser: "hoxom_inc"
+  SidebarRecentLimit: 5
 ...
