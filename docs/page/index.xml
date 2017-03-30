@@ -29,16 +29,12 @@
     </item>
     
     <item>
-      <title>Contact</title>
+      <title>お問い合わせ</title>
       <link>/page/contact/</link>
       <pubDate>Fri, 03 Apr 2015 02:13:50 +0000</pubDate>
       
       <guid>/page/contact/</guid>
-      <description>
-
-&lt;h2 id=&#34;contact&#34;&gt;Contact&lt;/h2&gt;
-
-&lt;p&gt;Aenean ipsum justo, semper eu nisl ut, pretium tincidunt sem. Praesent et diam sit amet lacus lobortis dictum a id lacus. Quisque hendrerit sit amet turpis eu varius. Ut id lorem ac felis ultrices tincidunt. Pellentesque consequat arcu ac fringilla imperdiet. Phasellus pellentesque, sapien non pulvinar blandit, sapien ante aliquet felis, vel porttitor sapien ante in lacus. Fusce non urna aliquet, malesuada nibh vel, luctus urna. Phasellus ut lacus molestie, varius purus quis, malesuada lorem.&lt;/p&gt;
+      <description>&lt;div class=&#34;google-form&#34;&gt;&lt;iframe src=&#34;https://docs.google.com/forms/d/e/1FAIpQLSeu1juP3SLIG9Ll1moclNrdAgkViXSIKUoviuy9cJVGn5M1Ew/viewform?embedded=true&#34; width=&#34;800&#34; height=&#34;600&#34; frameborder=&#34;0&#34; style=&#34;border:0&#34;&gt;Loading ...&lt;/iframe&gt;&lt;/div&gt;
 </description>
     </item>
     
