@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Projects on 株式会社ホクソエムのブログ</title>
-    <link>/project/index.xml</link>
+    <link>http://blog.hoxo-m.com/project/index.xml</link>
     <description>Recent content in Projects on 株式会社ホクソエムのブログ</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-JP</language>
@@ -12,10 +12,10 @@
     
     <item>
       <title>My awesome project</title>
-      <link>/project/my-awesome-project/</link>
+      <link>http://blog.hoxo-m.com/project/my-awesome-project/</link>
       <pubDate>Tue, 18 Nov 2014 02:13:50 +0000</pubDate>
       
-      <guid>/project/my-awesome-project/</guid>
+      <guid>http://blog.hoxo-m.com/project/my-awesome-project/</guid>
       <description>
 
 &lt;h2 id=&#34;about-project&#34;&gt;About project&lt;/h2&gt;

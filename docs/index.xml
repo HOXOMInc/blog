@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>株式会社ホクソエムのブログ</title>
-    <link>/index.xml</link>
+    <link>http://blog.hoxo-m.com/index.xml</link>
     <description>Recent content on 株式会社ホクソエムのブログ</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-JP</language>
@@ -12,10 +12,10 @@
     
     <item>
       <title>Global Tokyo.Rに参加しました</title>
-      <link>/2017/04/08/global-tokyor2/</link>
+      <link>http://blog.hoxo-m.com/2017/04/08/global-tokyor2/</link>
       <pubDate>Sat, 08 Apr 2017 21:32:00 -0900</pubDate>
       
-      <guid>/2017/04/08/global-tokyor2/</guid>
+      <guid>http://blog.hoxo-m.com/2017/04/08/global-tokyor2/</guid>
       <description>&lt;!-- BLOGDOWN-BODY-BEFORE
 
 /BLOGDOWN-BODY-BEFORE --&gt;
@@ -167,9 +167,9 @@ Today&#39;s presentation slide is published on GitHub.&lt;a href=&#34;https://t.
 &lt;div class=&#34;section level3&#34;&gt;
 &lt;h3&gt;集合写真&lt;/h3&gt;
 &lt;p&gt;&lt;img src=&#39;../../../../../../../img/globaltokyor_photo1.jpeg&#39; align=&#39;center&#39;&gt;&lt;/p&gt;
-&lt;p&gt;Enjo関連した記事&lt;/p&gt;
+&lt;p&gt;関連した記事&lt;/p&gt;
 &lt;p&gt;&lt;a href=&#34;http://d.hatena.ne.jp/dichika/20170402/p1&#34;&gt;集合写真のメガネの数をカウントする&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;y!&lt;/p&gt;
+&lt;p&gt;Enjoy!&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -188,10 +188,10 @@ Today&#39;s presentation slide is published on GitHub.&lt;a href=&#34;https://t.
     
     <item>
       <title>ホクソエムブログの作り方</title>
-      <link>/2017/03/29/hello-world/</link>
+      <link>http://blog.hoxo-m.com/2017/03/29/hello-world/</link>
       <pubDate>Wed, 29 Mar 2017 19:40:14 -0900</pubDate>
       
-      <guid>/2017/03/29/hello-world/</guid>
+      <guid>http://blog.hoxo-m.com/2017/03/29/hello-world/</guid>
       <description>&lt;!-- BLOGDOWN-BODY-BEFORE
 
 /BLOGDOWN-BODY-BEFORE --&gt;
@@ -295,10 +295,10 @@ teramonagi()&lt;/code&gt;&lt;/pre&gt;
     
     <item>
       <title>About</title>
-      <link>/page/about/</link>
+      <link>http://blog.hoxo-m.com/page/about/</link>
       <pubDate>Fri, 03 Apr 2015 02:13:50 +0000</pubDate>
       
-      <guid>/page/about/</guid>
+      <guid>http://blog.hoxo-m.com/page/about/</guid>
       <description>
 
 &lt;h2 id=&#34;about&#34;&gt;About&lt;/h2&gt;
@@ -313,20 +313,20 @@ teramonagi()&lt;/code&gt;&lt;/pre&gt;
     
     <item>
       <title>お問い合わせ</title>
-      <link>/page/contact/</link>
+      <link>http://blog.hoxo-m.com/page/contact/</link>
       <pubDate>Fri, 03 Apr 2015 02:13:50 +0000</pubDate>
       
-      <guid>/page/contact/</guid>
+      <guid>http://blog.hoxo-m.com/page/contact/</guid>
       <description>&lt;div class=&#34;google-form&#34;&gt;&lt;iframe src=&#34;https://docs.google.com/forms/d/e/1FAIpQLSeu1juP3SLIG9Ll1moclNrdAgkViXSIKUoviuy9cJVGn5M1Ew/viewform?embedded=true&#34; width=&#34;800&#34; height=&#34;600&#34; frameborder=&#34;0&#34; style=&#34;border:0&#34;&gt;Loading ...&lt;/iframe&gt;&lt;/div&gt;
 </description>
     </item>
     
     <item>
       <title>My awesome project</title>
-      <link>/project/my-awesome-project/</link>
+      <link>http://blog.hoxo-m.com/project/my-awesome-project/</link>
       <pubDate>Tue, 18 Nov 2014 02:13:50 +0000</pubDate>
       
-      <guid>/project/my-awesome-project/</guid>
+      <guid>http://blog.hoxo-m.com/project/my-awesome-project/</guid>
       <description>
 
 &lt;h2 id=&#34;about-project&#34;&gt;About project&lt;/h2&gt;
