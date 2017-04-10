@@ -12,7 +12,7 @@
 
     <div class="share">
         {{ if or (not (isset .Site.Params "sharetwitter")) .Site.Params.shareTwitter }}
-            <a class="icon-twitter" href="https://twitter.com/share?text={{ .Title }}&url={{ .Permalink }}"
+            <a class="icon-twitter" href="https://twitter.com/intent/tweet?original_referer=http://blog.hoxo-m.com{{ .Permalink }}&ref_src=twsrc&text={{ .Title }}&tw_p=tweetbutton&url=http://blog.hoxo-m.com{{ .Permalink }}"
                 onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
                 <i class="fa fa-twitter"></i>
                 <span class="hidden">Twitter</span>
