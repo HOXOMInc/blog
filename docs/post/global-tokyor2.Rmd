@@ -11,7 +11,7 @@ tags: ["report", "conference"]
 |---------------------------------------------------------------------|-----------|-------|
 | No packages? OK, develop it !!! | @hoxo_m | [link](https://www.slideshare.net/hoxo_m/r-packages-githubinstall-magicfor-dplyrteradata) |
 | Bayesian analysis of psychological pressure during penalty shootout | @Med_KU | - |
-| Blogdown | @blogdown | - |
+| Blogdown | @henningsway | - |
 | Customizing Awesome Maps with Leaflet | @u_ribo | - |
 | Awesome talk | @tomomoto | - |
 | R package to tune parameters using Bayesian Optimization | @y__mattu | [link](https://ymattu.github.io/Global-TokyoR-2/slide.html#/) |
