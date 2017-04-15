@@ -1,14 +1,32 @@
 Package: hoxomblog
 Type: Package
-Title: HOXO-M Blogs
+Title: HOXO-M Blog
 Version: 1.0.0
 Authors@R: c(
   person("Shinichi", "Takayanagi", role = c("aut", "cre"), email = "shinichi.takayanagi@gmail.com")
 )
 Description: HOXO-M blog
-License: GPL-3
+License: MIT + file LICENSE
+Remotes:
+    rstudio/blogdown
 Imports:
-  blogdown
+    stringr,
+    purrr,
+    httr,
+    magrittr,
+    bookdown,
+    devtools,
+    blogdown,
+    tutorial,
+    desc,
+    forcats,
+    haven,
+    readr,
+    tibble,
+    tidyr,
+    dplyr,
+    ggplot2,
+    lubridate
 LazyData: true
 URL: https://github.com/HOXOMInc/blog
 BugReports: https://github.com/HOXOMInc/blog/issues
