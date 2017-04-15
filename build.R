@@ -37,3 +37,11 @@ purrr::walk(power_ups, download_and_extract_pu)
 # install hugo & build site
 blogdown::install_hugo(version = "0.19", force = TRUE)
 blogdown::build_site()
+
+
+deps 
+
+devtools::dev_package_deps
+devtools::dev_package_deps(dependencies = NA)
+
+devtools::install_deps(dependencies = TRUE);if (!all(deps$package %in% installed.packages())) { message("missing: ", paste(setdiff(deps$package, installed.packages()), collapse=", ")); q(status = 1, save = "no")}'

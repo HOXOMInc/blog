@@ -3,8 +3,7 @@ Type: Package
 Title: HOXO-M Blog
 Version: 1.0.0
 Authors@R: c(
-  person("Shinichi", "Takayanagi", role = c("aut", "cre"), email = "shinichi.takayanagi@gmail.com")
-)
+  person("Shinichi", "Takayanagi", role = c("aut", "cre"), email = "shinichi.takayanagi@gmail.com"))
 Description: HOXO-M blog
 License: MIT + file LICENSE
 Remotes:
