@@ -7,6 +7,7 @@ Authors@R: c(
 )
 Description: HOXO-M blog
 License: MIT + file LICENSE
+Encoding: UTF-8
 Remotes:
     rstudio/blogdown
 Imports:
