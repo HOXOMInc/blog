@@ -1,6 +1,4 @@
-#!/bin/sh
-set -e
-[ -z "${GITHUB_PAT}" ] && exit 0
+#!/bin/bash
 
 git config --global user.email "jtrecenti@jtrecenti.com"
 git config --global user.name "jtrecenti"
