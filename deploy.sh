@@ -4,7 +4,7 @@ echo `ls`
 rm -rf docs || exit 0;
 mkdir docs
 
-cp -r public/* docs
+cp -r public/* docs/
 cd docs
 
 git config user.email "example@example.com"
