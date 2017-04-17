@@ -167,10 +167,11 @@ text(x = width(dj)/2, y = height(dj)-100, labels = &amp;quot;おわかりいた�
       <pubDate>Sat, 08 Apr 2017 21:32:00 -0900</pubDate>
       
       <guid>http://blog.hoxo-m.com/2017/04/08/global-tokyor2/</guid>
-      <description>&lt;!-- BLOGDOWN-BODY-BEFORE
+      <description>&lt;!-- BLOGDOWN-HEAD --&gt;
+&lt;!-- /BLOGDOWN-HEAD --&gt;
 
-/BLOGDOWN-BODY-BEFORE --&gt;
-
+&lt;!-- BLOGDOWN-BODY-BEFORE --&gt;
+&lt;!-- /BLOGDOWN-BODY-BEFORE --&gt;
 &lt;p&gt;2017年4月1日、ドイツのRユーザ &lt;a href=&#34;https://twitter.com/henningsway&#34;&gt;@henningsway&lt;/a&gt;が東京へやって来るということで、&lt;a href=&#34;https://japanr.connpass.com/event/54006/&#34;&gt;Global Tokyo.R#2&lt;/a&gt;が開催されました。ホクソエム各位も運営や発表を行いました!!というわけで今回の記事はGlobal Tokyo.Rの参加レポートとなります。&lt;/p&gt;
 &lt;table&gt;
 &lt;colgroup&gt;
@@ -323,17 +324,6 @@ Today&#39;s presentation slide is published on GitHub.&lt;a href=&#34;https://t.
 &lt;p&gt;Enjoy!&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-
-
-
-&lt;!-- BLOGDOWN-HEAD
-
-
-
-
-
-
-/BLOGDOWN-HEAD --&gt;
 </description>
     </item>
     
