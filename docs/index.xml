@@ -7,8 +7,24 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-JP</language>
     <copyright>HOXOM, Inc.</copyright>
-    <lastBuildDate>Mon, 10 Apr 2017 00:00:00 -0900</lastBuildDate>
+    <lastBuildDate>Tue, 18 Apr 2017 19:40:14 -0900</lastBuildDate>
     <atom:link href="/" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>タカヤナギ＝サンの初更新</title>
+      <link>http://blog.hoxo-m.com/2017/04/18/takayanagi-san-first/</link>
+      <pubDate>Tue, 18 Apr 2017 19:40:14 -0900</pubDate>
+      
+      <guid>http://blog.hoxo-m.com/2017/04/18/takayanagi-san-first/</guid>
+      <description>&lt;div id=&#34;hello-world&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;タカヤナギ=サンのHello, world&lt;/h2&gt;
+&lt;p&gt;こんにちは、ホクソエムの高柳(通称：タカヤナギ＝サン)です。 IT(イット)やプログラミングは苦手なので、BLOG更新の一発目としてR的なHello, worldをしておきます。&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;plot(1:10)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/takayanagi-san-first_files/figure-html/unnamed-chunk-1-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Enjoy!&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
     
     <item>
       <title>DJタカヤナギ=サンで学ぶRを用いた画像操作</title>
