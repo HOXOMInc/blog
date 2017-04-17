@@ -1,0 +1,20 @@
+---
+title: "タカヤナギ＝サンの初更新"
+author: "Shinichi Takayanagi"
+date: 2017-04-18T19:40:14-09:00
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+```
+
+## タカヤナギ=サンのHello, world
+
+こんにちは、ホクソエムの高柳(通称：タカヤナギ＝サン)です。
+IT(イット)やプログラミングは苦手なので、BLOG更新の一発目としてR的なHello, worldをしておきます。
+
+```{r}
+plot(1:10)
+```
+
+Enjoy!
