@@ -1,0 +1,11 @@
+default:
+  username: "admin"
+  role: "admin"
+
+develop: 
+  username: "dev"
+  role: "admin"
+
+guest:
+  username: "guest"
+  role: "user"
