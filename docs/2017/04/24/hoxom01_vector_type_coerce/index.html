@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns#">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>R の強制型変換と NA の取り扱い &middot; </title>
+        <meta name="description" content="はじめに R において欠損値を表す NA は非常に便利です。 NA は普通の R ユーザにとって自然に取り扱うことのできる概念ですが、それを支える内部の仕組みは">
+        <meta name="HandheldFriendly" content="True">
+        <meta name="MobileOptimized" content="320">
+        <meta name="generator" content="Hugo 0.20.2" />
+        <meta name="robots" content="index,follow">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta property="og:title" content="R の強制型変換と NA の取り扱い">
+<meta property="og:description" content="はじめに R において欠損値を表す NA は非常に便利です。 NA は普通の R ユーザにとって自然に取り扱うことのできる概念ですが、それを支える内部の仕組みは">
+<meta property="og:type" content="article">
+<meta property="og:url" content="/2017/04/24/hoxom01_vector_type_coerce/">
+        <link rel="stylesheet" href="/dist/styles.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,600,700,300&subset=latin,cyrillic-ext,latin-ext,cyrillic">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        
+        
+
+  <meta name="twitter:card" content="summary"/>
+
+
+
+<meta name="twitter:text:title" content="R の強制型変換と NA の取り扱い"/>
+<meta name="twitter:title" content="R の強制型変換と NA の取り扱い"/>
+<meta name="twitter:description" content="はじめに R において欠損値を表す NA は非常に便利です。 NA は普通の R ユーザにとって自然に取り扱うことのできる概念ですが、それを支える内部の仕組みは"/>
+
+
+        <meta name="twitter:image" content="http://blog.hoxo-m.com/img/hoxom_inc_logo_crop250.png"/>
+    </head>
+    <body>
+        
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-87778111-3', 'auto');
+ga('send', 'pageview');
+</script>
+
+
+        <div id="wrapper">
+            <header class="site-header">
+                <div class="container">
+                    <div class="site-title-wrapper">
+                        
+                            <h1 class="site-title">
+                                <a title="株式会社ホクソエムのブログ" href="/">株式会社ホクソエムのブログ</a>
+                            </h1>
+                        
+                        <a class="button-square" href="/index.xml"><i class="fa fa-rss"></i></a>
+                        
+                            <a class="button-square button-social hint--top" data-hint="Twitter" title="Twitter" href="https://twitter.com/hoxom_inc">
+                                <i class="fa fa-twitter"></i>
+                            </a>
+                        
+                        
+                        
+                            <a class="button-square button-social hint--top" data-hint="Github" title="Github" href="https://github.com/HOXOMInc">
+                                <i class="fa fa-github-alt"></i>
+                            </a>
+                        
+                        
+                        
+                        
+                        
+                    </div>
+
+                    <ul class="site-nav">
+                        
+    <li class="site-nav-item">
+        <a title="Blog" href="/">Blog</a>
+    </li>
+
+    <li class="site-nav-item">
+        <a title="Contact" href="/page/contact/">Contact</a>
+    </li>
+
+    <li class="site-nav-item">
+        <a title="About" href="/page/about/">About</a>
+    </li>
+
+                    </ul>
+                </div>
+            </header>
+
+            <div id="container">
+
+
+<div class="container">
+    <article class="post-container" itemscope="" itemtype="http://schema.org/BlogPosting">
+        <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">R の強制型変換と NA の取り扱い</h1>
+    
+    <p class="post-date">
+        <span>Published <time datetime="2017-04-24" itemprop="datePublished">Mon, Apr 24, 2017</time></span>
+        <span>by</span>
+        <span itemscope="" itemprop="author" itemtype="https://schema.org/Person">
+            <span itemprop="name">
+                <a href="" itemprop="url" rel="author">Koji Makiyama</a>
+            </span>
+        </span>
+    </p>
+</header>
+
+        <div class="post-content clearfix" itemprop="articleBody">
+    
+
+    <!-- BLOGDOWN-HEAD -->
+<!-- /BLOGDOWN-HEAD -->
+
+<!-- BLOGDOWN-BODY-BEFORE -->
+<!-- /BLOGDOWN-BODY-BEFORE -->
+<div class="section level2">
+<h2>はじめに</h2>
+<p>R において欠損値を表す NA は非常に便利です。 NA は普通の R ユーザにとって自然に取り扱うことのできる概念ですが、それを支える内部の仕組みはわりと複雑です。 例えば、NA の型は論理値型ですが、一体それはなぜでしょうか？ 今日は R における強制型変換の話とからめてその謎をひも解いていきます。</p>
+</div>
+<div class="section level2">
+<h2>ベクトルと型</h2>
+<p>R のベクトルは型を持ちます。</p>
+<p>例えば、1から3までの数値ベクトルを作成してみます。</p>
+<pre class="r"><code>x &lt;- 1:3
+x
+#&gt; [1] 1 2 3</code></pre>
+<p>ベクトルの型を確認するには <code>typeof()</code> 関数を使います。</p>
+<pre class="r"><code>typeof(x)
+#&gt; [1] &quot;integer&quot;</code></pre>
+<p>ベクトル <code>x</code> の型は整数型(integer)であることがわかります。</p>
+<p>他にも、例えば次のようなベクトルを作成してみます。</p>
+<pre class="r"><code>x &lt;- c(&quot;U&quot;, &quot;NA&quot;, &quot;DON&quot;)
+x
+#&gt; [1] &quot;U&quot;   &quot;NA&quot;  &quot;DON&quot;
+typeof(x)
+#&gt; [1] &quot;character&quot;</code></pre>
+<p>この場合、ベクトル <code>x</code> は文字列型(character)になります。</p>
+<p>このように、Rのベクトルは必ず型を持ちます。</p>
+<p>では、1つのベクトルの中に異なる型の要素を含めるとどうなるでしょうか。</p>
+<pre class="r"><code>x &lt;- c(&quot;U&quot;, 2, &quot;DON&quot;)
+x
+#&gt; [1] &quot;U&quot;   &quot;2&quot;   &quot;DON&quot;
+typeof(x)
+#&gt; [1] &quot;character&quot;</code></pre>
+<p>この場合、ベクトル <code>x</code> 中に含まれる数値の <code>2</code> は、文字列型の <code>&quot;2&quot;</code> に<strong>強制型変換</strong>されます。</p>
+</div>
+<div class="section level2">
+<h2>強制型変換</h2>
+<p>R のベクトルは、1つだけしか型を持つことができません。<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></p>
+<p>したがって、異なる型の要素を結合してベクトルを作成しようとすると、型を統一するために、型の自動変換が行われます。これが強制型変換です。</p>
+<p>強制型変換にはルールがあります。結合しようとする要素の型の中で、最も柔軟性の高い型に変換されます。</p>
+<p>型の柔軟性は次の通りです。</p>
+<pre><code>logical &lt; integer &lt; double &lt; complex &lt; character
+(論理値型 &lt; 整数型 &lt; 倍精度小数点型 &lt; 複素数型 &lt; 文字列型)</code></pre>
+<p>先ほどの例で言うと、<code>&quot;U&quot;</code> は character、<code>2</code> は double、<code>&quot;DON&quot;</code> は character なので、最も柔軟性の高い character 型に変換されたと言うわけです。</p>
+<p>他の例を挙げると、例えば、整数型と論理値型を結合すると、整数型に強制型変換されます。<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a></p>
+<pre class="r"><code>x &lt;- c(1L, 2L, 3L, TRUE, FALSE)
+x
+#&gt; [1] 1 2 3 1 0
+typeof(x)
+#&gt; [1] &quot;integer&quot;</code></pre>
+<p>複素数型と倍精度小数点型を結合すると、複素数型に強制型変換されます。</p>
+<pre class="r"><code>x &lt;- c(1 + 1i, 2 + 2i, 3, 4)
+x
+#&gt; [1] 1+1i 2+2i 3+0i 4+0i
+typeof(x)
+#&gt; [1] &quot;complex&quot;</code></pre>
+<p>おわかりのように、型の柔軟性は、低い方から高い方に自然に変換できるように決められています。</p>
+<p>どんな型でも文字列に変換することができるので、文字列の型が最も柔軟性が高いことがわかります。</p>
+<pre class="r"><code>x &lt;- c(TRUE, 1L, 1.0, 1+0i, &quot;hoge&quot;)
+x
+#&gt; [1] &quot;TRUE&quot; &quot;1&quot;    &quot;1&quot;    &quot;1+0i&quot; &quot;hoge&quot;
+typeof(x)
+#&gt; [1] &quot;character&quot;</code></pre>
+</div>
+<div id="-na-" class="section level2">
+<h2>強制型変換における NA の取り扱い</h2>
+<p>R には値が欠測していることを表すために NA という特別な値が用意されています。</p>
+<pre class="r"><code>x &lt;- c(1, NA, 3)
+x
+#&gt; [1]  1 NA  3</code></pre>
+<p>しかし、この NA の型を調べてみると、logical になっています。</p>
+<pre class="r"><code>typeof(NA)
+#&gt; [1] &quot;logical&quot;</code></pre>
+<p>したがって、NA は論理値型であると思われるかもしれませんが、それは違います。</p>
+<p>実は、Rでは、全部の型に対して NA が用意されています。</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">型</th>
+<th align="left">type</th>
+<th align="left">NA</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">論理値型</td>
+<td align="left">logical</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">整数型</td>
+<td align="left">integer</td>
+<td align="left">NA_integer_</td>
+</tr>
+<tr class="odd">
+<td align="left">倍精度小数点型</td>
+<td align="left">double</td>
+<td align="left">NA_real_</td>
+</tr>
+<tr class="even">
+<td align="left">複素数型</td>
+<td align="left">complex</td>
+<td align="left">NA_complex_</td>
+</tr>
+<tr class="odd">
+<td align="left">文字列型</td>
+<td align="left">character</td>
+<td align="left">NA_character_</td>
+</tr>
+</tbody>
+</table>
+<p>その理由は強制型変換と深いつながりがあります。</p>
+<p>まず、NA は最も柔軟性の低い論理値型で定義されています。</p>
+<p>すなわち、論理値型のベクトルに NA が含まれている場合、強制型変換は行われません。</p>
+<pre class="r"><code>x &lt;- c(TRUE, NA, FALSE)
+x
+#&gt; [1]  TRUE    NA FALSE
+typeof(x)
+#&gt; [1] &quot;logical&quot;</code></pre>
+<p>次に、整数型のベクトルに NA を含めたいとします。 NA は論理値型ですので、整数型に強制型変換しなければなりません。 そこで使用されるのが整数型の NA である NA_integer_ というわけです。</p>
+<pre class="r"><code>x &lt;- c(1L, NA, 3L)
+x
+#&gt; [1]  1 NA  3
+typeof(x)
+#&gt; [1] &quot;integer&quot;</code></pre>
+<p>表面上は NA と表示されますが、NA_integer_ に変換されていることは次のようにして確認できます。<a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a></p>
+<pre class="r"><code>identical(x[2], NA)
+#&gt; [1] FALSE
+identical(x[2], NA_integer_)
+#&gt; [1] TRUE</code></pre>
+<p>他の型でも同様に、NA は強制型変換のルールに従い、ベクトル中で最も柔軟性の高い型の NA に変換されます。</p>
+<p>例えば、文字列型に含まれる NA は NA_character_ に変換されます。</p>
+<pre class="r"><code>x &lt;- c(&quot;U&quot;, NA, &quot;DON&quot;)
+x
+#&gt; [1] &quot;U&quot;   NA    &quot;DON&quot;
+identical(x[2], NA_character_)
+#&gt; [1] TRUE</code></pre>
+<p>デフォルトの NA が論理値型である理由は、ここにあります。</p>
+<p>NA を柔軟性の最も低い論理値型とすることで、強制型変換のルールがうまく働き、最も自然な形で型変換を行うことができるのです。</p>
+</div>
+<div class="section level2">
+<h2>まとめ</h2>
+<p>デフォルトの NA が論理値型であることで、強制型変換のルールとうまく組み合わさり、自然な動きをすることがわかりました。</p>
+<p>すべての型の NA は、<code>is.na()</code> を適用すると TRUE となります。</p>
+<pre class="r"><code>sapply(list(NA, NA_integer_, NA_real_, NA_complex_, NA_character_), is.na)
+#&gt; [1] TRUE TRUE TRUE TRUE TRUE</code></pre>
+<p>したがって、ユーザは特に型を意識することなく NA を取り扱うことができます。</p>
+<p>このように、便利な機能の裏側には様々な仕組みが動いています。</p>
+<p>Rのこのような仕組みに興味を持った方は、参考文献に挙げた『R言語徹底解説』を読んでみてください。 Rの世界が広がると思います。</p>
+</div>
+<div class="section level2">
+<h2>参考文献</h2>
+<ul>
+<li>Hadley Wickham 著、石田基広、市川太祐、高柳慎一、福島真太朗 訳『R言語徹底解説』共立出版</li>
+<li><a href="https://www.amazon.co.jp/dp/432012393X" class="uri">https://www.amazon.co.jp/dp/432012393X</a></li>
+</ul>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>もし、複数の型を持つベクトルが必要ならば、<strong>リスト</strong> を使うことになります。<a href="#fnref1">↩</a></p></li>
+<li id="fn2"><p>細かいことですが、R で <code>1</code> と書くと通常は倍精度小数点型とみなされます。整数型リテラルを表現するには <code>1L</code> のように数字の後に L を加える必要があります。<a href="#fnref2">↩</a></p></li>
+<li id="fn3"><p><code>identical()</code> は、オブジェクトが同じかどうかを判定する関数です。<a href="#fnref3">↩</a></p></li>
+</ol>
+</div>
+
+</div>
+
+        <footer class="post-footer clearfix">
+    
+        <p class="post-tags">
+            <span>Tagged:</span>
+            
+            
+                <a href="/tags/r/">R</a>
+            
+        </p>
+    
+
+    <div class="share">
+        
+            <a class="icon-twitter" href="https://twitter.com/intent/tweet?original_referer=http://blog.hoxo-m.com%2f2017%2f04%2f24%2fhoxom01_vector_type_coerce%2f&ref_src=twsrc&text=R%20%e3%81%ae%e5%bc%b7%e5%88%b6%e5%9e%8b%e5%a4%89%e6%8f%9b%e3%81%a8%20NA%20%e3%81%ae%e5%8f%96%e3%82%8a%e6%89%b1%e3%81%84&tw_p=tweetbutton&url=http://blog.hoxo-m.com%2f2017%2f04%2f24%2fhoxom01_vector_type_coerce%2f"
+                onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                <i class="fa fa-twitter"></i>
+                <span class="hidden">Twitter</span>
+            </a>
+        
+
+        
+            <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.hoxo-m.com%2f2017%2f04%2f24%2fhoxom01_vector_type_coerce%2f"
+                onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                <i class="fa fa-facebook"></i>
+                <span class="hidden">Facebook</span>
+            </a>
+        
+
+        
+            <a class="icon-google-plus" href="https://plus.google.com/share?url=http://blog.hoxo-m.com%2f2017%2f04%2f24%2fhoxom01_vector_type_coerce%2f"
+              onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+              <i class="fa fa-google-plus"></i>
+                <span class="hidden">Google+</span>
+            </a>
+        
+        
+    </div>
+</footer>
+
+        
+    </article>
+</div>
+
+            </div>
+        </div>
+
+        <footer class="footer">
+            <div class="container">
+                <div class="site-title-wrapper">
+                    <h1 class="site-title">
+                        <a title="株式会社ホクソエムのブログ" href="/">株式会社ホクソエムのブログ</a>
+                    </h1>
+                    <a class="button-square button-jump-top js-jump-top" href="#">
+                        <i class="fa fa-angle-up"></i>
+                    </a>
+                </div>
+
+                <p class="footer-copyright">
+                    <span>&copy; HOXOM, Inc. 2017 / Powered by <a href="https://gohugo.io/">Hugo</a></span>
+                </p>
+                <p class="footer-copyright">
+                    <span><a href="https://github.com/roryg/ghostwriter">Ghostwriter theme</a> By <a href="http://jollygoodthemes.com">JollyGoodThemes</a></span>
+                    <span>/ <a href="https://github.com/jbub/ghostwriter">Ported</a> to Hugo By <a href="https://github.com/jbub">jbub</a></span>
+                </p>
+            </div>
+        </footer>
+
+        <script src="/js/jquery-1.11.3.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js"></script>
+        <script src="/js/jquery.fitvids.js"></script>
+        <script src="/js/scripts.js"></script>
+    </body>
+</html>
+

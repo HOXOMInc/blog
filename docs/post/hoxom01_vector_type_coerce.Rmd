@@ -1,7 +1,7 @@
 ---
 title: "R の強制型変換と NA の取り扱い"
 author: "Koji Makiyama"
-date: 2017-04-24T21:00:00-22:00
+date: 2017-04-24T21:00:00-09:00
 tags: ["R"]
 ---
 
