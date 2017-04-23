@@ -2,13 +2,363 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>株式会社ホクソエムのブログ</title>
-    <link>http://blog.hoxo-m.com/index.xml</link>
+    <link>http://blog.hoxo-m.com/</link>
     <description>Recent content on 株式会社ホクソエムのブログ</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-JP</language>
     <copyright>HOXOM, Inc.</copyright>
-    <lastBuildDate>Thu, 20 Apr 2017 08:02:00 -0900</lastBuildDate>
-    <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 24 Apr 2017 21:00:00 -2200</lastBuildDate>
+    <atom:link href="/" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>R の強制型変換と NA の取り扱い</title>
+      <link>http://blog.hoxo-m.com/hoxom01_vector_type_coerce/</link>
+      <pubDate>Mon, 24 Apr 2017 21:00:00 -2200</pubDate>
+      
+      <guid>http://blog.hoxo-m.com/hoxom01_vector_type_coerce/</guid>
+      <description>&lt;!-- BLOGDOWN-HEAD --&gt;
+&lt;!-- /BLOGDOWN-HEAD --&gt;
+
+&lt;!-- BLOGDOWN-BODY-BEFORE --&gt;
+&lt;!-- /BLOGDOWN-BODY-BEFORE --&gt;
+&lt;div class=&#34;section level2&#34;&gt;
+&lt;h2&gt;はじめに&lt;/h2&gt;
+&lt;p&gt;R において欠損値を表す NA は非常に便利です。 NA は普通の R ユーザにとって自然に取り扱うことのできる概念ですが、それを支える内部の仕組みはわりと複雑です。 例えば、NA の型は論理値型ですが、一体それはなぜでしょうか？ 今日は R における強制型変換の話とからめてその謎をひも解いていきます。&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&#34;section level2&#34;&gt;
+&lt;h2&gt;ベクトルと型&lt;/h2&gt;
+&lt;p&gt;R のベクトルは型を持ちます。&lt;/p&gt;
+&lt;p&gt;例えば、1から3までの数値ベクトルを作成してみます。&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;x &amp;lt;- 1:3
+x
+#&amp;gt; [1] 1 2 3&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;ベクトルの型を確認するには &lt;code&gt;typeof()&lt;/code&gt; 関数を使います。&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;typeof(x)
+#&amp;gt; [1] &amp;quot;integer&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;ベクトル &lt;code&gt;x&lt;/code&gt; の型は整数型(integer)であることがわかります。&lt;/p&gt;
+&lt;p&gt;他にも、例えば次のようなベクトルを作成してみます。&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;x &amp;lt;- c(&amp;quot;U&amp;quot;, &amp;quot;NA&amp;quot;, &amp;quot;DON&amp;quot;)
+x
+#&amp;gt; [1] &amp;quot;U&amp;quot;   &amp;quot;NA&amp;quot;  &amp;quot;DON&amp;quot;
+typeof(x)
+#&amp;gt; [1] &amp;quot;character&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;この場合、ベクトル &lt;code&gt;x&lt;/code&gt; は文字列型(character)になります。&lt;/p&gt;
+&lt;p&gt;このように、Rのベクトルは必ず型を持ちます。&lt;/p&gt;
+&lt;p&gt;では、1つのベクトルの中に異なる型の要素を含めるとどうなるでしょうか。&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;x &amp;lt;- c(&amp;quot;U&amp;quot;, 2, &amp;quot;DON&amp;quot;)
+x
+#&amp;gt; [1] &amp;quot;U&amp;quot;   &amp;quot;2&amp;quot;   &amp;quot;DON&amp;quot;
+typeof(x)
+#&amp;gt; [1] &amp;quot;character&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;この場合、ベクトル &lt;code&gt;x&lt;/code&gt; 中に含まれる数値の &lt;code&gt;2&lt;/code&gt; は、文字列型の &lt;code&gt;&amp;quot;2&amp;quot;&lt;/code&gt; に&lt;strong&gt;強制型変換&lt;/strong&gt;されます。&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&#34;section level2&#34;&gt;
+&lt;h2&gt;強制型変換&lt;/h2&gt;
+&lt;p&gt;R のベクトルは、1つだけしか型を持つことができません。&lt;a href=&#34;#fn1&#34; class=&#34;footnoteRef&#34; id=&#34;fnref1&#34;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;したがって、異なる型の要素を結合してベクトルを作成しようとすると、型を統一するために、型の自動変換が行われます。これが強制型変換です。&lt;/p&gt;
+&lt;p&gt;強制型変換にはルールがあります。結合しようとする要素の型の中で、最も柔軟性の高い型に変換されます。&lt;/p&gt;
+&lt;p&gt;型の柔軟性は次の通りです。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;logical &amp;lt; integer &amp;lt; double &amp;lt; complex &amp;lt; character
+(論理値型 &amp;lt; 整数型 &amp;lt; 倍精度小数点型 &amp;lt; 複素数型 &amp;lt; 文字列型)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;先ほどの例で言うと、&lt;code&gt;&amp;quot;U&amp;quot;&lt;/code&gt; は character、&lt;code&gt;2&lt;/code&gt; は double、&lt;code&gt;&amp;quot;DON&amp;quot;&lt;/code&gt; は character なので、最も柔軟性の高い character 型に変換されたと言うわけです。&lt;/p&gt;
+&lt;p&gt;他の例を挙げると、例えば、整数型と論理値型を結合すると、整数型に強制型変換されます。&lt;a href=&#34;#fn2&#34; class=&#34;footnoteRef&#34; id=&#34;fnref2&#34;&gt;&lt;sup&gt;2&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;x &amp;lt;- c(1L, 2L, 3L, TRUE, FALSE)
+x
+#&amp;gt; [1] 1 2 3 1 0
+typeof(x)
+#&amp;gt; [1] &amp;quot;integer&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;複素数型と倍精度小数点型を結合すると、複素数型に強制型変換されます。&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;x &amp;lt;- c(1 + 1i, 2 + 2i, 3, 4)
+x
+#&amp;gt; [1] 1+1i 2+2i 3+0i 4+0i
+typeof(x)
+#&amp;gt; [1] &amp;quot;complex&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;おわかりのように、型の柔軟性は、低い方から高い方に自然に変換できるように決められています。&lt;/p&gt;
+&lt;p&gt;どんな型でも文字列に変換することができるので、文字列の型が最も柔軟性が高いことがわかります。&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;x &amp;lt;- c(TRUE, 1L, 1.0, 1+0i, &amp;quot;hoge&amp;quot;)
+x
+#&amp;gt; [1] &amp;quot;TRUE&amp;quot; &amp;quot;1&amp;quot;    &amp;quot;1&amp;quot;    &amp;quot;1+0i&amp;quot; &amp;quot;hoge&amp;quot;
+typeof(x)
+#&amp;gt; [1] &amp;quot;character&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;-na-&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;強制型変換における NA の取り扱い&lt;/h2&gt;
+&lt;p&gt;R には値が欠測していることを表すために NA という特別な値が用意されています。&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;x &amp;lt;- c(1, NA, 3)
+x
+#&amp;gt; [1]  1 NA  3&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;しかし、この NA の型を調べてみると、logical になっています。&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;typeof(NA)
+#&amp;gt; [1] &amp;quot;logical&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;したがって、NA は論理値型であると思われるかもしれませんが、それは違います。&lt;/p&gt;
+&lt;p&gt;実は、Rでは、全部の型に対して NA が用意されています。&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr class=&#34;header&#34;&gt;
+&lt;th align=&#34;left&#34;&gt;型&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;type&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;NA&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;論理値型&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;logical&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;NA&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;整数型&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;integer&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;NA_integer_&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;倍精度小数点型&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;double&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;NA_real_&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;複素数型&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;complex&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;NA_complex_&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;文字列型&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;character&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;NA_character_&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;その理由は強制型変換と深いつながりがあります。&lt;/p&gt;
+&lt;p&gt;まず、NA は最も柔軟性の低い論理値型で定義されています。&lt;/p&gt;
+&lt;p&gt;すなわち、論理値型のベクトルに NA が含まれている場合、強制型変換は行われません。&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;x &amp;lt;- c(TRUE, NA, FALSE)
+x
+#&amp;gt; [1]  TRUE    NA FALSE
+typeof(x)
+#&amp;gt; [1] &amp;quot;logical&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;次に、整数型のベクトルに NA を含めたいとします。 NA は論理値型ですので、整数型に強制型変換しなければなりません。 そこで使用されるのが整数型の NA である NA_integer_ というわけです。&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;x &amp;lt;- c(1L, NA, 3L)
+x
+#&amp;gt; [1]  1 NA  3
+typeof(x)
+#&amp;gt; [1] &amp;quot;integer&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;表面上は NA と表示されますが、NA_integer_ に変換されていることは次のようにして確認できます。&lt;a href=&#34;#fn3&#34; class=&#34;footnoteRef&#34; id=&#34;fnref3&#34;&gt;&lt;sup&gt;3&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;identical(x[2], NA)
+#&amp;gt; [1] FALSE
+identical(x[2], NA_integer_)
+#&amp;gt; [1] TRUE&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;他の型でも同様に、NA は強制型変換のルールに従い、ベクトル中で最も柔軟性の高い型の NA に変換されます。&lt;/p&gt;
+&lt;p&gt;例えば、文字列型に含まれる NA は NA_character_ に変換されます。&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;x &amp;lt;- c(&amp;quot;U&amp;quot;, NA, &amp;quot;DON&amp;quot;)
+x
+#&amp;gt; [1] &amp;quot;U&amp;quot;   NA    &amp;quot;DON&amp;quot;
+identical(x[2], NA_character_)
+#&amp;gt; [1] TRUE&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;デフォルトの NA が論理値型である理由は、ここにあります。&lt;/p&gt;
+&lt;p&gt;NA を柔軟性の最も低い論理値型とすることで、強制型変換のルールがうまく働き、最も自然な形で型変換を行うことができるのです。&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&#34;section level2&#34;&gt;
+&lt;h2&gt;まとめ&lt;/h2&gt;
+&lt;p&gt;デフォルトの NA が論理値型であることで、強制型変換のルールとうまく組み合わさり、自然な動きをすることがわかりました。&lt;/p&gt;
+&lt;p&gt;すべての型の NA は、&lt;code&gt;is.na()&lt;/code&gt; を適用すると TRUE となります。&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;sapply(list(NA, NA_integer_, NA_real_, NA_complex_, NA_character_), is.na)
+#&amp;gt; [1] TRUE TRUE TRUE TRUE TRUE&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;したがって、ユーザは特に型を意識することなく NA を取り扱うことができます。&lt;/p&gt;
+&lt;p&gt;このように、便利な機能の裏側には様々な仕組みが動いています。&lt;/p&gt;
+&lt;p&gt;Rのこのような仕組みに興味を持った方は、参考文献に挙げた『R言語徹底解説』を読んでみてください。 Rの世界が広がると思います。&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&#34;section level2&#34;&gt;
+&lt;h2&gt;参考文献&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Hadley Wickham 著、石田基広、市川太祐、高柳慎一、福島真太朗 訳『R言語徹底解説』共立出版&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.amazon.co.jp/dp/432012393X&#34; class=&#34;uri&#34;&gt;https://www.amazon.co.jp/dp/432012393X&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class=&#34;footnotes&#34;&gt;
+&lt;hr /&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn1&#34;&gt;&lt;p&gt;もし、複数の型を持つベクトルが必要ならば、&lt;strong&gt;リスト&lt;/strong&gt; を使うことになります。&lt;a href=&#34;#fnref1&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li id=&#34;fn2&#34;&gt;&lt;p&gt;細かいことですが、R で &lt;code&gt;1&lt;/code&gt; と書くと通常は倍精度小数点型とみなされます。整数型リテラルを表現するには &lt;code&gt;1L&lt;/code&gt; のように数字の後に L を加える必要があります。&lt;a href=&#34;#fnref2&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li id=&#34;fn3&#34;&gt;&lt;p&gt;&lt;code&gt;identical()&lt;/code&gt; は、オブジェクトが同じかどうかを判定する関数です。&lt;a href=&#34;#fnref3&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>R の強制型変換と NA の取り扱い</title>
+      <link>http://blog.hoxo-m.com/2017/04/24/hoxom01_vector_type_coerce/</link>
+      <pubDate>Mon, 24 Apr 2017 21:00:00 -2200</pubDate>
+      
+      <guid>http://blog.hoxo-m.com/2017/04/24/hoxom01_vector_type_coerce/</guid>
+      <description>&lt;!-- BLOGDOWN-HEAD --&gt;
+&lt;!-- /BLOGDOWN-HEAD --&gt;
+
+&lt;!-- BLOGDOWN-BODY-BEFORE --&gt;
+&lt;!-- /BLOGDOWN-BODY-BEFORE --&gt;
+&lt;div class=&#34;section level2&#34;&gt;
+&lt;h2&gt;はじめに&lt;/h2&gt;
+&lt;p&gt;R において欠損値を表す NA は非常に便利です。 NA は普通の R ユーザにとって自然に取り扱うことのできる概念ですが、それを支える内部の仕組みはわりと複雑です。 例えば、NA の型は論理値型ですが、一体それはなぜでしょうか？ 今日は R における強制型変換の話とからめてその謎をひも解いていきます。&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&#34;section level2&#34;&gt;
+&lt;h2&gt;ベクトルと型&lt;/h2&gt;
+&lt;p&gt;R のベクトルは型を持ちます。&lt;/p&gt;
+&lt;p&gt;例えば、1から3までの数値ベクトルを作成してみます。&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;x &amp;lt;- 1:3
+x
+#&amp;gt; [1] 1 2 3&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;ベクトルの型を確認するには &lt;code&gt;typeof()&lt;/code&gt; 関数を使います。&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;typeof(x)
+#&amp;gt; [1] &amp;quot;integer&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;ベクトル &lt;code&gt;x&lt;/code&gt; の型は整数型(integer)であることがわかります。&lt;/p&gt;
+&lt;p&gt;他にも、例えば次のようなベクトルを作成してみます。&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;x &amp;lt;- c(&amp;quot;U&amp;quot;, &amp;quot;NA&amp;quot;, &amp;quot;DON&amp;quot;)
+x
+#&amp;gt; [1] &amp;quot;U&amp;quot;   &amp;quot;NA&amp;quot;  &amp;quot;DON&amp;quot;
+typeof(x)
+#&amp;gt; [1] &amp;quot;character&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;この場合、ベクトル &lt;code&gt;x&lt;/code&gt; は文字列型(character)になります。&lt;/p&gt;
+&lt;p&gt;このように、Rのベクトルは必ず型を持ちます。&lt;/p&gt;
+&lt;p&gt;では、1つのベクトルの中に異なる型の要素を含めるとどうなるでしょうか。&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;x &amp;lt;- c(&amp;quot;U&amp;quot;, 2, &amp;quot;DON&amp;quot;)
+x
+#&amp;gt; [1] &amp;quot;U&amp;quot;   &amp;quot;2&amp;quot;   &amp;quot;DON&amp;quot;
+typeof(x)
+#&amp;gt; [1] &amp;quot;character&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;この場合、ベクトル &lt;code&gt;x&lt;/code&gt; 中に含まれる数値の &lt;code&gt;2&lt;/code&gt; は、文字列型の &lt;code&gt;&amp;quot;2&amp;quot;&lt;/code&gt; に&lt;strong&gt;強制型変換&lt;/strong&gt;されます。&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&#34;section level2&#34;&gt;
+&lt;h2&gt;強制型変換&lt;/h2&gt;
+&lt;p&gt;R のベクトルは、1つだけしか型を持つことができません。&lt;a href=&#34;#fn1&#34; class=&#34;footnoteRef&#34; id=&#34;fnref1&#34;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;したがって、異なる型の要素を結合してベクトルを作成しようとすると、型を統一するために、型の自動変換が行われます。これが強制型変換です。&lt;/p&gt;
+&lt;p&gt;強制型変換にはルールがあります。結合しようとする要素の型の中で、最も柔軟性の高い型に変換されます。&lt;/p&gt;
+&lt;p&gt;型の柔軟性は次の通りです。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;logical &amp;lt; integer &amp;lt; double &amp;lt; complex &amp;lt; character
+(論理値型 &amp;lt; 整数型 &amp;lt; 倍精度小数点型 &amp;lt; 複素数型 &amp;lt; 文字列型)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;先ほどの例で言うと、&lt;code&gt;&amp;quot;U&amp;quot;&lt;/code&gt; は character、&lt;code&gt;2&lt;/code&gt; は double、&lt;code&gt;&amp;quot;DON&amp;quot;&lt;/code&gt; は character なので、最も柔軟性の高い character 型に変換されたと言うわけです。&lt;/p&gt;
+&lt;p&gt;他の例を挙げると、例えば、整数型と論理値型を結合すると、整数型に強制型変換されます。&lt;a href=&#34;#fn2&#34; class=&#34;footnoteRef&#34; id=&#34;fnref2&#34;&gt;&lt;sup&gt;2&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;x &amp;lt;- c(1L, 2L, 3L, TRUE, FALSE)
+x
+#&amp;gt; [1] 1 2 3 1 0
+typeof(x)
+#&amp;gt; [1] &amp;quot;integer&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;複素数型と倍精度小数点型を結合すると、複素数型に強制型変換されます。&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;x &amp;lt;- c(1 + 1i, 2 + 2i, 3, 4)
+x
+#&amp;gt; [1] 1+1i 2+2i 3+0i 4+0i
+typeof(x)
+#&amp;gt; [1] &amp;quot;complex&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;おわかりのように、型の柔軟性は、低い方から高い方に自然に変換できるように決められています。&lt;/p&gt;
+&lt;p&gt;どんな型でも文字列に変換することができるので、文字列の型が最も柔軟性が高いことがわかります。&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;x &amp;lt;- c(TRUE, 1L, 1.0, 1+0i, &amp;quot;hoge&amp;quot;)
+x
+#&amp;gt; [1] &amp;quot;TRUE&amp;quot; &amp;quot;1&amp;quot;    &amp;quot;1&amp;quot;    &amp;quot;1+0i&amp;quot; &amp;quot;hoge&amp;quot;
+typeof(x)
+#&amp;gt; [1] &amp;quot;character&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;-na-&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;強制型変換における NA の取り扱い&lt;/h2&gt;
+&lt;p&gt;R には値が欠測していることを表すために NA という特別な値が用意されています。&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;x &amp;lt;- c(1, NA, 3)
+x
+#&amp;gt; [1]  1 NA  3&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;しかし、この NA の型を調べてみると、logical になっています。&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;typeof(NA)
+#&amp;gt; [1] &amp;quot;logical&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;したがって、NA は論理値型であると思われるかもしれませんが、それは違います。&lt;/p&gt;
+&lt;p&gt;実は、Rでは、全部の型に対して NA が用意されています。&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr class=&#34;header&#34;&gt;
+&lt;th align=&#34;left&#34;&gt;型&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;type&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;NA&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;論理値型&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;logical&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;NA&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;整数型&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;integer&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;NA_integer_&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;倍精度小数点型&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;double&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;NA_real_&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;複素数型&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;complex&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;NA_complex_&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;文字列型&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;character&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;NA_character_&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;その理由は強制型変換と深いつながりがあります。&lt;/p&gt;
+&lt;p&gt;まず、NA は最も柔軟性の低い論理値型で定義されています。&lt;/p&gt;
+&lt;p&gt;すなわち、論理値型のベクトルに NA が含まれている場合、強制型変換は行われません。&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;x &amp;lt;- c(TRUE, NA, FALSE)
+x
+#&amp;gt; [1]  TRUE    NA FALSE
+typeof(x)
+#&amp;gt; [1] &amp;quot;logical&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;次に、整数型のベクトルに NA を含めたいとします。 NA は論理値型ですので、整数型に強制型変換しなければなりません。 そこで使用されるのが整数型の NA である NA_integer_ というわけです。&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;x &amp;lt;- c(1L, NA, 3L)
+x
+#&amp;gt; [1]  1 NA  3
+typeof(x)
+#&amp;gt; [1] &amp;quot;integer&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;表面上は NA と表示されますが、NA_integer_ に変換されていることは次のようにして確認できます。&lt;a href=&#34;#fn3&#34; class=&#34;footnoteRef&#34; id=&#34;fnref3&#34;&gt;&lt;sup&gt;3&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;identical(x[2], NA)
+#&amp;gt; [1] FALSE
+identical(x[2], NA_integer_)
+#&amp;gt; [1] TRUE&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;他の型でも同様に、NA は強制型変換のルールに従い、ベクトル中で最も柔軟性の高い型の NA に変換されます。&lt;/p&gt;
+&lt;p&gt;例えば、文字列型に含まれる NA は NA_character_ に変換されます。&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;x &amp;lt;- c(&amp;quot;U&amp;quot;, NA, &amp;quot;DON&amp;quot;)
+x
+#&amp;gt; [1] &amp;quot;U&amp;quot;   NA    &amp;quot;DON&amp;quot;
+identical(x[2], NA_character_)
+#&amp;gt; [1] TRUE&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;デフォルトの NA が論理値型である理由は、ここにあります。&lt;/p&gt;
+&lt;p&gt;NA を柔軟性の最も低い論理値型とすることで、強制型変換のルールがうまく働き、最も自然な形で型変換を行うことができるのです。&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&#34;section level2&#34;&gt;
+&lt;h2&gt;まとめ&lt;/h2&gt;
+&lt;p&gt;デフォルトの NA が論理値型であることで、強制型変換のルールとうまく組み合わさり、自然な動きをすることがわかりました。&lt;/p&gt;
+&lt;p&gt;すべての型の NA は、&lt;code&gt;is.na()&lt;/code&gt; を適用すると TRUE となります。&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;sapply(list(NA, NA_integer_, NA_real_, NA_complex_, NA_character_), is.na)
+#&amp;gt; [1] TRUE TRUE TRUE TRUE TRUE&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;したがって、ユーザは特に型を意識することなく NA を取り扱うことができます。&lt;/p&gt;
+&lt;p&gt;このように、便利な機能の裏側には様々な仕組みが動いています。&lt;/p&gt;
+&lt;p&gt;Rのこのような仕組みに興味を持った方は、参考文献に挙げた『R言語徹底解説』を読んでみてください。 Rの世界が広がると思います。&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&#34;section level2&#34;&gt;
+&lt;h2&gt;参考文献&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Hadley Wickham 著、石田基広、市川太祐、高柳慎一、福島真太朗 訳『R言語徹底解説』共立出版&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.amazon.co.jp/dp/432012393X&#34; class=&#34;uri&#34;&gt;https://www.amazon.co.jp/dp/432012393X&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class=&#34;footnotes&#34;&gt;
+&lt;hr /&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn1&#34;&gt;&lt;p&gt;もし、複数の型を持つベクトルが必要ならば、&lt;strong&gt;リスト&lt;/strong&gt; を使うことになります。&lt;a href=&#34;#fnref1&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li id=&#34;fn2&#34;&gt;&lt;p&gt;細かいことですが、R で &lt;code&gt;1&lt;/code&gt; と書くと通常は倍精度小数点型とみなされます。整数型リテラルを表現するには &lt;code&gt;1L&lt;/code&gt; のように数字の後に L を加える必要があります。&lt;a href=&#34;#fnref2&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li id=&#34;fn3&#34;&gt;&lt;p&gt;&lt;code&gt;identical()&lt;/code&gt; は、オブジェクトが同じかどうかを判定する関数です。&lt;a href=&#34;#fnref3&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+</description>
+    </item>
     
     <item>
       <title>ナウでヤングなRの環境変数管理方法</title>
@@ -144,28 +494,13 @@ conf &amp;lt;- config::get()&lt;/code&gt;&lt;/pre&gt;
       <pubDate>Tue, 18 Apr 2017 19:40:14 -0900</pubDate>
       
       <guid>http://blog.hoxo-m.com/2017/04/18/takayanagi-san-first/</guid>
-      <description>&lt;!-- BLOGDOWN-BODY-BEFORE
-
-/BLOGDOWN-BODY-BEFORE --&gt;
-
-&lt;div id=&#34;hello-world&#34; class=&#34;section level2&#34;&gt;
+      <description>&lt;div id=&#34;hello-world&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;タカヤナギ=サンのHello, world&lt;/h2&gt;
 &lt;p&gt;こんにちは、ホクソエムの高柳(通称：タカヤナギ＝サン)です。 IT(イット)やプログラミングは苦手なので、BLOG更新の一発目としてR的なHello, worldをしておきます。&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;plot(1:10)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;#####../content/post/takayanagi-san-first_files/figure-html/unnamed-chunk-1-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/takayanagi-san-first_files/figure-html/unnamed-chunk-1-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;Enjoy!&lt;/p&gt;
 &lt;/div&gt;
-
-
-
-&lt;!-- BLOGDOWN-HEAD
-
-
-
-
-
-
-/BLOGDOWN-HEAD --&gt;
 </description>
     </item>
     
