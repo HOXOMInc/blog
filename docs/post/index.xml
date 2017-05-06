@@ -2,13 +2,54 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on 株式会社ホクソエムのブログ</title>
-    <link>http://blog.hoxo-m.com/post/</link>
+    <link>http://blog.hoxo-m.com/post/index.xml</link>
     <description>Recent content in Posts on 株式会社ホクソエムのブログ</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-JP</language>
     <copyright>HOXOM, Inc.</copyright>
-    <lastBuildDate>Mon, 24 Apr 2017 21:00:00 -0900</lastBuildDate>
-    <atom:link href="/post/" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 07 May 2017 21:00:00 -0900</lastBuildDate>
+    <atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>「東京ベイエリア・タワーマンション地図」の作成</title>
+      <link>http://blog.hoxo-m.com/2017/05/07/tokyo-bay-area-tower-map/</link>
+      <pubDate>Sun, 07 May 2017 21:00:00 -0900</pubDate>
+      
+      <guid>http://blog.hoxo-m.com/2017/05/07/tokyo-bay-area-tower-map/</guid>
+      <description>&lt;div class=&#34;section level2&#34;&gt;
+&lt;h2&gt;はじめに&lt;/h2&gt;
+&lt;p&gt;キュッキュキュッキュ🎧こんばんはDJタカヤナギです😤。&lt;/p&gt;
+&lt;p&gt;今日で連休が終わるという方が大半なのではないでしょうか？ 長い連休明けの月曜日はいつだって嫌なものですね。&lt;/p&gt;
+&lt;p&gt;さて、東京オリンピックまであと3年ということで、その中心地となるであろう東京湾周辺、通称、東京ベイエリアが熱いわけです。 特にここ数年で高騰したタワーマンション（以下、タワマン）や、 これからもガンガン建設されていく予定のまだ見ぬタワマンに対し、投資対象として強い興味があるわけです。&lt;/p&gt;
+&lt;p&gt;主に、弊社の社長が。&lt;/p&gt;
+&lt;p&gt;ただ、東京ベイエリアのタワマンと言いましても数がたくさんありすぎて覚えられないぞと、 一目で、どれがどのタワマンかわかるような地図が必要だぞというわけで、それをR言語を用いて作ってみましたので、その方法を公開します。&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;r&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;R言語での実装&lt;/h2&gt;
+&lt;p&gt;さて、問題となるのはタワマン一覧のデータソースですが、ここでは&lt;a href=&#34;http://www.axel-home.com/&#34;&gt;アクセルホームさん&lt;/a&gt;が公開されている&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.axel-home.com/towers/chuo/index.html&#34; class=&#34;uri&#34;&gt;http://www.axel-home.com/towers/chuo/index.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.axel-home.com/towers/koto/index.html&#34; class=&#34;uri&#34;&gt;http://www.axel-home.com/towers/koto/index.html&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;あたりをソースとさせていただきました（実際には当該ページから次のページへと遷移した数ページも使用）。 こちら、よくまとまっており、大変助かります。 なお、中央区(chuo)・江東区(koto)ともに3ページ分のデータが存在することについては目視確認です。&lt;/p&gt;
+&lt;p&gt;なお、スマホ用のページが存在することに後から気が付いたのですが、今回はPC用のサイトでそのままがんばりました。 スマホ用のページの方が、一般に構造が簡単なので、スクレイピングするにはお勧めです。&lt;/p&gt;
+&lt;p&gt;これらのページから、必要な情報を取得するためのスクレイピング関数を作成します。 詳細はコード中のコメントとして記載しています。 コードはすべて&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://gist.github.com/shinichi-takayanagi/c4830e46563e3dd9a9a1c2e1328e0eac&#34;&gt;こちらのGist&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;にあります。&lt;/p&gt;
+&lt;p&gt;どこのHTMLタグのどのデータを抜けば良いのかの“当たり”を付けるためにはGoogle Chromeの「検証ツール」を用いました。&lt;/p&gt;
+&lt;p&gt;関数自体はやっつけで書いたので、汚いです…&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&#34;section level2&#34;&gt;
+&lt;h2&gt;東京ベイエリア・タワーマンション地図&lt;/h2&gt;
+&lt;p&gt;出来上がった結果がこちらです。ベイエリアと言いながら街中まで入ってしまっているのを除くのは読者への課題とします。&lt;/p&gt;
+&lt;p&gt;また、&lt;a href=&#34;/post/tokyo-bay-area-tower-map_files/map.html&#34;&gt;こちら&lt;/a&gt;に飛べば全画面にて表示されます。&lt;/p&gt;
+&lt;p&gt;Enjoy!!!&lt;/p&gt;
+&lt;iframe src=&#34;/post/tokyo-bay-area-tower-map_files/map.html&#34; name=&#34;in&#34; width=&#34;800&#34; height=&#34;600&#34;&gt;
+&lt;/div&gt;
+</description>
+    </item>
     
     <item>
       <title>R の強制型変換と NA の取り扱い</title>
