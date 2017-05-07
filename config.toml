@@ -1,13 +1,13 @@
-baseurl = "http://blog.hoxo-m.com"
-title = "株式会社ホクソエムのブログ"
-theme = "ghostwriter"
-languageCode = "ja-JP"
-copyright = "HOXOM, Inc."
-googleAnalytics = "UA-87778111-3"
-hasCJKLanguage = true
-publishDir = "docs"
-rssLimit = 10
-enableEmoji = true
+baseurl         = "https://yutannihilation.github.io/HOXOMinc-blog/"
+title           = "株式会社ホクソエムのブログ"
+theme           = "ghostwriter"
+languageCode    = "ja-JP"
+copyright       = "HOXOM, Inc."
+googleAnalytics = "XXXXXXXXXXX"
+hasCJKLanguage  = true
+publishDir      = "docs"
+rssLimit        = 10
+enableEmoji     = true
 
 [Taxonomies]
     tag = "tags"
@@ -17,12 +17,7 @@ enableEmoji = true
     headline = "ホクソエムブログ"
     description = "株式会社ホクソエムのブログ"
     github = "https://github.com/HOXOMInc"
-#    gitlab = "https://gitlab.com/XXX"
-#    linkedin = "https://linkedin.com/in/XXX/"
-#    gplus = "https://google.com/+XXX"
     twitter = "https://twitter.com/hoxom_inc"
-#    stackoverflow = "https://stackoverflow.com/users/XXX/YYY"
-#    email = "hoxomhoxom@gmail.com"
     opengraph = true
     shareTwitter = true
     shareFacebook = true
@@ -37,11 +32,6 @@ enableEmoji = true
     name = "Blog"
     url = "/"
     weight = 1
-
-#[[menu.main]]
-#    name = "Projects"
-#    url = "/project/"
-#    weight = 2
 
 [[menu.main]]
     name = "Contact"

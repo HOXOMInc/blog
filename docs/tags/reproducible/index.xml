@@ -2,19 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Reproducible on 株式会社ホクソエムのブログ</title>
-    <link>http://blog.hoxo-m.com/tags/reproducible/index.xml</link>
+    <link>http://blog.hoxo-m.com/HOXOMinc-blog/tags/reproducible/</link>
     <description>Recent content in Reproducible on 株式会社ホクソエムのブログ</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-JP</language>
     <copyright>HOXOM, Inc.</copyright>
-    <atom:link href="/tags/reproducible/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 20 Apr 2017 08:02:00 -0900</lastBuildDate>
+    <atom:link href="/HOXOMinc-blog/tags/reproducible/" rel="self" type="application/rss+xml" />
     
     <item>
       <title>ナウでヤングなRの環境変数管理方法</title>
-      <link>http://blog.hoxo-m.com/2017/04/20/config/</link>
+      <link>http://blog.hoxo-m.com/HOXOMinc-blog/2017/04/20/config/</link>
       <pubDate>Thu, 20 Apr 2017 08:02:00 -0900</pubDate>
       
-      <guid>http://blog.hoxo-m.com/2017/04/20/config/</guid>
+      <guid>http://blog.hoxo-m.com/HOXOMinc-blog/2017/04/20/config/</guid>
       <description>&lt;!-- BLOGDOWN-BODY-BEFORE
 
 /BLOGDOWN-BODY-BEFORE --&gt;

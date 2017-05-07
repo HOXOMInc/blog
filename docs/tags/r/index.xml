@@ -2,19 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>R on 株式会社ホクソエムのブログ</title>
-    <link>http://blog.hoxo-m.com/tags/r/index.xml</link>
+    <link>http://blog.hoxo-m.com/HOXOMinc-blog/tags/r/</link>
     <description>Recent content in R on 株式会社ホクソエムのブログ</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-JP</language>
     <copyright>HOXOM, Inc.</copyright>
-    <atom:link href="/tags/r/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 07 May 2017 21:00:00 -0900</lastBuildDate>
+    <atom:link href="/HOXOMinc-blog/tags/r/" rel="self" type="application/rss+xml" />
     
     <item>
       <title>「東京ベイエリア・タワーマンション地図」の作成</title>
-      <link>http://blog.hoxo-m.com/2017/05/07/tokyo-bay-area-tower-map/</link>
+      <link>http://blog.hoxo-m.com/HOXOMinc-blog/2017/05/07/tokyo-bay-area-tower-map/</link>
       <pubDate>Sun, 07 May 2017 21:00:00 -0900</pubDate>
       
-      <guid>http://blog.hoxo-m.com/2017/05/07/tokyo-bay-area-tower-map/</guid>
+      <guid>http://blog.hoxo-m.com/HOXOMinc-blog/2017/05/07/tokyo-bay-area-tower-map/</guid>
       <description>&lt;div class=&#34;section level2&#34;&gt;
 &lt;h2&gt;はじめに&lt;/h2&gt;
 &lt;p&gt;キュッキュキュッキュ🎧こんばんはDJタカヤナギです😤。&lt;/p&gt;
@@ -43,19 +44,19 @@
 &lt;div class=&#34;section level2&#34;&gt;
 &lt;h2&gt;東京ベイエリア・タワーマンション地図&lt;/h2&gt;
 &lt;p&gt;出来上がった結果がこちらです。ベイエリアと言いながら街中まで入ってしまっているのを除くのは読者への課題とします。&lt;/p&gt;
-&lt;p&gt;また、&lt;a href=&#34;/post/tokyo-bay-area-tower-map_files/map.html&#34;&gt;こちら&lt;/a&gt;に飛べば全画面にて表示されます。&lt;/p&gt;
+&lt;p&gt;また、&lt;a href=&#34;/HOXOMinc-blog/post/tokyo-bay-area-tower-map_files/map.html&#34;&gt;こちら&lt;/a&gt;に飛べば全画面にて表示されます。&lt;/p&gt;
 &lt;p&gt;Enjoy!!!&lt;/p&gt;
-&lt;iframe src=&#34;/post/tokyo-bay-area-tower-map_files/map.html&#34; name=&#34;in&#34; width=&#34;800&#34; height=&#34;600&#34;&gt;
+&lt;iframe src=&#34;/HOXOMinc-blog/post/tokyo-bay-area-tower-map_files/map.html&#34; name=&#34;in&#34; width=&#34;800&#34; height=&#34;600&#34;&gt;
 &lt;/div&gt;
 </description>
     </item>
     
     <item>
       <title>R の強制型変換と NA の取り扱い</title>
-      <link>http://blog.hoxo-m.com/2017/04/24/hoxom01_vector_type_coerce/</link>
+      <link>http://blog.hoxo-m.com/HOXOMinc-blog/2017/04/24/hoxom01_vector_type_coerce/</link>
       <pubDate>Mon, 24 Apr 2017 21:00:00 -0900</pubDate>
       
-      <guid>http://blog.hoxo-m.com/2017/04/24/hoxom01_vector_type_coerce/</guid>
+      <guid>http://blog.hoxo-m.com/HOXOMinc-blog/2017/04/24/hoxom01_vector_type_coerce/</guid>
       <description>&lt;!-- BLOGDOWN-HEAD --&gt;
 &lt;!-- /BLOGDOWN-HEAD --&gt;
 
