@@ -5,6 +5,7 @@ languageCode = "ja-JP"
 copyright = "HOXOM, Inc."
 googleAnalytics = "UA-87778111-3"
 hasCJKLanguage = true
+publishDir = "docs"
 rssLimit = 10
 enableEmoji = true
 
