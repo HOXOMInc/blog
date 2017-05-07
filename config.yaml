@@ -1,0 +1,9 @@
+baseurl: http://blog.hoxo-m.com
+languageCode: ja-JP
+title: HOXOM blog
+publishDir: docs
+params:
+  CopyrightHTML: "Copyright &#xA9; 2017 HOXOM, Inc.. All Rights Reserved."
+  TwitterUser: "hoxom_inc"
+  SidebarRecentLimit: 5
+...

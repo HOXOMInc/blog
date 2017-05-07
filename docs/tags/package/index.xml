@@ -2,20 +2,19 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Package on 株式会社ホクソエムのブログ</title>
-    <link>http://blog.hoxo-m.com/HOXOMinc-blog/tags/package/</link>
+    <link>http://blog.hoxo-m.com/tags/package/index.xml</link>
     <description>Recent content in Package on 株式会社ホクソエムのブログ</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-JP</language>
     <copyright>HOXOM, Inc.</copyright>
-    <lastBuildDate>Thu, 20 Apr 2017 08:02:00 -0900</lastBuildDate>
-    <atom:link href="/HOXOMinc-blog/tags/package/" rel="self" type="application/rss+xml" />
+    <atom:link href="/tags/package/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>ナウでヤングなRの環境変数管理方法</title>
-      <link>http://blog.hoxo-m.com/HOXOMinc-blog/2017/04/20/config/</link>
+      <link>http://blog.hoxo-m.com/2017/04/20/config/</link>
       <pubDate>Thu, 20 Apr 2017 08:02:00 -0900</pubDate>
       
-      <guid>http://blog.hoxo-m.com/HOXOMinc-blog/2017/04/20/config/</guid>
+      <guid>http://blog.hoxo-m.com/2017/04/20/config/</guid>
       <description>&lt;!-- BLOGDOWN-BODY-BEFORE
 
 /BLOGDOWN-BODY-BEFORE --&gt;
@@ -140,10 +139,10 @@ conf &amp;lt;- config::get()&lt;/code&gt;&lt;/pre&gt;
     
     <item>
       <title>DJタカヤナギ=サンで学ぶRを用いた画像操作</title>
-      <link>http://blog.hoxo-m.com/HOXOMinc-blog/2017/04/10/imager/</link>
+      <link>http://blog.hoxo-m.com/2017/04/10/imager/</link>
       <pubDate>Mon, 10 Apr 2017 00:00:00 -0900</pubDate>
       
-      <guid>http://blog.hoxo-m.com/HOXOMinc-blog/2017/04/10/imager/</guid>
+      <guid>http://blog.hoxo-m.com/2017/04/10/imager/</guid>
       <description>&lt;div id=&#34;djr&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;DJタカヤナギ=サンで学ぶRを用いた画像操作&lt;/h2&gt;
 &lt;p&gt;こんにちは、ホクソエムの市川です。&lt;/p&gt;
@@ -169,7 +168,7 @@ dj &amp;lt;- load.image(u)
 print(dj)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;## Image. Width: 960 pix Height: 720 pix Depth: 1 Colour channels: 3&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;plot(dj, axes = FALSE)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/HOXOMinc-blog/post/imager_files/figure-html/unnamed-chunk-2-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/imager_files/figure-html/unnamed-chunk-2-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class=&#34;section level3&#34;&gt;
 &lt;h3&gt;画像上に図形を表示する&lt;/h3&gt;
@@ -179,7 +178,7 @@ print(dj)&lt;/code&gt;&lt;/pre&gt;
 highlight(px.circle(r = 40, x = 300, y = 720), col = &amp;quot;orange&amp;quot;)
 highlight(px.diamond(r = 40, x = 600, y = 350), col = &amp;quot;green&amp;quot;)
 highlight(px.square(r = 40, x = width(dj)*2, y = height(dj)), col = &amp;quot;black&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/HOXOMinc-blog/post/imager_files/figure-html/unnamed-chunk-3-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/imager_files/figure-html/unnamed-chunk-3-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class=&#34;section level3&#34;&gt;
 &lt;h3&gt;画像上にテキストを表示する&lt;/h3&gt;
@@ -187,16 +186,16 @@ highlight(px.square(r = 40, x = width(dj)*2, y = height(dj)), col = &amp;quot;bl
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;par(family=&amp;quot;Hiragino Kaku Gothic Pro W6&amp;quot;)
 plot(dj, axes = FALSE)
 text(x = width(dj)/2, y = height(dj)-100, labels = &amp;quot;キュッキュキュッキュ&amp;quot;, col = &amp;quot;orange&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/HOXOMinc-blog/post/imager_files/figure-html/unnamed-chunk-4-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/imager_files/figure-html/unnamed-chunk-4-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class=&#34;section level3&#34;&gt;
 &lt;h3&gt;画像を切り取る&lt;/h3&gt;
 &lt;p&gt;画像の一部を切り取るにはimsub()を用います。 画像の範囲指定には条件式が利用できます。 &lt;code&gt;%inr%&lt;/code&gt;演算子を用いると矩形で範囲指定できます。&lt;/p&gt;
 &lt;p&gt;なお、ここで&lt;code&gt;%&amp;gt;%&lt;/code&gt;演算子を用いていますがこれはパイプ演算子と呼ばれるものであり、演算子左側の操作を右側の操作に受け渡すものです。&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;dj %&amp;gt;% imsub(x &amp;gt; width(dj)/2) %&amp;gt;% plot(axes = TRUE) # 画像右半分を切り取る&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/HOXOMinc-blog/post/imager_files/figure-html/unnamed-chunk-5-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/imager_files/figure-html/unnamed-chunk-5-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;dj %&amp;gt;% imsub(x %inr% c(411,722), y %inr% c(67,349)) %&amp;gt;% plot(axes = TRUE) # 矩形による範囲指定&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/HOXOMinc-blog/post/imager_files/figure-html/unnamed-chunk-5-2.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/imager_files/figure-html/unnamed-chunk-5-2.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;この操作はインタラクティブに行うことも可能です。 この際はgrabRect()を用います。 表示された画像に対して、矩形で範囲指定すると、画像左上端と右下端の点の座標が返されます。&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;grabRect(dj) # インタラクティブな範囲指定
 # 以下のような結果が返される。
@@ -207,14 +206,14 @@ text(x = width(dj)/2, y = height(dj)-100, labels = &amp;quot;キュッキュキ�
 &lt;h3&gt;画像をぼかす&lt;/h3&gt;
 &lt;p&gt;ちょっとおじさんの画像ばかり見ていると目が辛くなってきましたね。 画像をぼかしてみましょう。 画像をぼかすにはisoblur()を用います。 &lt;code&gt;sigma&lt;/code&gt;の値を大きくすればするほど画像はぼかされていきます。&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;dj %&amp;gt;% isoblur(sigma = 15) %&amp;gt;% plot(axes =FALSE)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/HOXOMinc-blog/post/imager_files/figure-html/unnamed-chunk-7-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/imager_files/figure-html/unnamed-chunk-7-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class=&#34;section level3&#34;&gt;
 &lt;h3&gt;クソコラ実践&lt;/h3&gt;
 &lt;p&gt;さて、ここまでの操作を用いてクソコラを作ってみましょう。 クソコラを作る前にここで別のおじさんを投入します。 こちらもCC0で公開されている画像です。桜が満開ですね。&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ojisan &amp;lt;- load.image(&amp;quot;https://raw.githubusercontent.com/dichika/ojisan/master/sakura4.jpg&amp;quot;) # 別のおじさん
 plot(ojisan, axes = FALSE)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/HOXOMinc-blog/post/imager_files/figure-html/unnamed-chunk-8-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/imager_files/figure-html/unnamed-chunk-8-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;この画像とDJタカヤナギ=サンの画像を用いて、クソコラを作ります。 まずresize()を用いて、2つの画像のサイズを揃えます。&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;dj_mod &amp;lt;- dj %&amp;gt;% resize(size_x = 500, size_y = 500)
 ojisan_mod &amp;lt;- ojisan %&amp;gt;% resize(size_x = 500, size_y = 500)&lt;/code&gt;&lt;/pre&gt;
@@ -243,25 +242,25 @@ bbox &amp;lt;- result[[1]]$faceRectangle
 ojisan_sub &amp;lt;- ojisan_mod %&amp;gt;% imsub(x %inr% c(bbox$left, bbox$left + bbox$width),
                                    y %inr% c(bbox$top, bbox$top + bbox$height))
 plot(ojisan_sub, axes = FALSE)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/HOXOMinc-blog/post/imager_files/figure-html/unnamed-chunk-12-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/imager_files/figure-html/unnamed-chunk-12-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;抽出した顔画像をDJタカヤナギ=サンの画像に重ねてみましょう。 isoblur()でぼかした後、imdraw()で画像を重ねています。 これはこれで味わい深いですが、ちょっと顔画像が大きいですね。&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ojisan_blur &amp;lt;- ojisan_sub %&amp;gt;% isoblur(sigma = 5)
 ojisan_pos_x &amp;lt;- 100
 ojisan_pos_y &amp;lt;- 200
 dj_ojisan &amp;lt;- dj %&amp;gt;% imdraw(ojisan_blur, x = ojisan_pos_x, y = ojisan_pos_y, opacity = 0.9)
 plot(dj_ojisan, axes = FALSE)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/HOXOMinc-blog/post/imager_files/figure-html/unnamed-chunk-13-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/imager_files/figure-html/unnamed-chunk-13-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;imresize()でscaleを50%に指定して縮小して重ねることにします。 だいぶ自然なクソコラになってきましたね。&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ojisan_blur_half &amp;lt;- ojisan_sub %&amp;gt;% isoblur(sigma = 5) %&amp;gt;% imresize(scale = 0.5)
 dj_ojisan2 &amp;lt;- dj %&amp;gt;% imdraw(ojisan_blur_half, x = ojisan_pos_x, y = ojisan_pos_y, opacity = 0.9)
 plot(dj_ojisan2, axes = FALSE)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/HOXOMinc-blog/post/imager_files/figure-html/unnamed-chunk-14-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/imager_files/figure-html/unnamed-chunk-14-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;それでは最後の仕上げです。 わかりやすいように赤い円で強調し文字を加えます。&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;par(family=&amp;quot;Hiragino Kaku Gothic Pro W6&amp;quot;)
 plot(dj_ojisan2, axes = FALSE)
 highlight(px.circle(r = bbox$width*0.5*1.1, x = ojisan_pos_x*2.6, y = ojisan_pos_y*2.5), col = &amp;quot;red&amp;quot;)
 text(x = width(dj)/2, y = height(dj)-100, labels = &amp;quot;おわかりいただけただろうか&amp;quot;, col = &amp;quot;white&amp;quot;, cex = 1.2)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/HOXOMinc-blog/post/imager_files/figure-html/unnamed-chunk-15-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/imager_files/figure-html/unnamed-chunk-15-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;いかがでしたか？ Rだけで自然な心霊写真が作れましたね。&lt;/p&gt;
 &lt;p&gt;今回使った&lt;code&gt;imager&lt;/code&gt;パッケージの機能はどれも基本的なものです。 公式サイトには充実した機能紹介があります。ぜひ参考にして皆さんもクソコラ製作を効率化してみてください。&lt;/p&gt;
 &lt;ul&gt;

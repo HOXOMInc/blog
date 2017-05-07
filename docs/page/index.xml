@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Pages on 株式会社ホクソエムのブログ</title>
-    <link>http://blog.hoxo-m.com/HOXOMinc-blog/page/</link>
+    <link>http://blog.hoxo-m.com/page/index.xml</link>
     <description>Recent content in Pages on 株式会社ホクソエムのブログ</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-JP</language>
     <copyright>HOXOM, Inc.</copyright>
     <lastBuildDate>Fri, 03 Apr 2015 02:13:50 +0000</lastBuildDate>
-    <atom:link href="/HOXOMinc-blog/page/" rel="self" type="application/rss+xml" />
+    <atom:link href="/page/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>About</title>
-      <link>http://blog.hoxo-m.com/HOXOMinc-blog/page/about/</link>
+      <link>http://blog.hoxo-m.com/page/about/</link>
       <pubDate>Fri, 03 Apr 2015 02:13:50 +0000</pubDate>
       
-      <guid>http://blog.hoxo-m.com/HOXOMinc-blog/page/about/</guid>
+      <guid>http://blog.hoxo-m.com/page/about/</guid>
       <description>
 
 &lt;h2 id=&#34;about&#34;&gt;About&lt;/h2&gt;
@@ -30,10 +30,10 @@
     
     <item>
       <title>お問い合わせ</title>
-      <link>http://blog.hoxo-m.com/HOXOMinc-blog/page/contact/</link>
+      <link>http://blog.hoxo-m.com/page/contact/</link>
       <pubDate>Fri, 03 Apr 2015 02:13:50 +0000</pubDate>
       
-      <guid>http://blog.hoxo-m.com/HOXOMinc-blog/page/contact/</guid>
+      <guid>http://blog.hoxo-m.com/page/contact/</guid>
       <description>&lt;div class=&#34;google-form&#34;&gt;&lt;iframe src=&#34;https://docs.google.com/forms/d/e/1FAIpQLSeu1juP3SLIG9Ll1moclNrdAgkViXSIKUoviuy9cJVGn5M1Ew/viewform?embedded=true&#34; width=&#34;800&#34; height=&#34;600&#34; frameborder=&#34;0&#34; style=&#34;border:0&#34;&gt;Loading ...&lt;/iframe&gt;&lt;/div&gt;
 </description>
     </item>

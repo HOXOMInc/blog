@@ -2,65 +2,65 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on 株式会社ホクソエムのブログ</title>
-    <link>http://blog.hoxo-m.com/HOXOMinc-blog/tags/</link>
+    <link>http://blog.hoxo-m.com/tags/</link>
     <description>Recent content in Tags on 株式会社ホクソエムのブログ</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-JP</language>
     <copyright>HOXOM, Inc.</copyright>
     <lastBuildDate>Sat, 08 Apr 2017 21:32:00 -0900</lastBuildDate>
-    <atom:link href="/HOXOMinc-blog/tags/" rel="self" type="application/rss+xml" />
+    <atom:link href="/tags/" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Conference</title>
-      <link>http://blog.hoxo-m.com/HOXOMinc-blog/tags/conference/</link>
+      <link>http://blog.hoxo-m.com/tags/conference/</link>
       <pubDate>Sat, 08 Apr 2017 21:32:00 -0900</pubDate>
       
-      <guid>http://blog.hoxo-m.com/HOXOMinc-blog/tags/conference/</guid>
+      <guid>http://blog.hoxo-m.com/tags/conference/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Package</title>
-      <link>http://blog.hoxo-m.com/HOXOMinc-blog/tags/package/</link>
+      <link>http://blog.hoxo-m.com/tags/package/</link>
       <pubDate>Thu, 20 Apr 2017 08:02:00 -0900</pubDate>
       
-      <guid>http://blog.hoxo-m.com/HOXOMinc-blog/tags/package/</guid>
+      <guid>http://blog.hoxo-m.com/tags/package/</guid>
       <description></description>
     </item>
     
     <item>
       <title>R</title>
-      <link>http://blog.hoxo-m.com/HOXOMinc-blog/tags/r/</link>
-      <pubDate>Sun, 07 May 2017 21:00:00 -0900</pubDate>
+      <link>http://blog.hoxo-m.com/tags/r/</link>
+      <pubDate>Mon, 24 Apr 2017 21:00:00 -0900</pubDate>
       
-      <guid>http://blog.hoxo-m.com/HOXOMinc-blog/tags/r/</guid>
+      <guid>http://blog.hoxo-m.com/tags/r/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Report</title>
-      <link>http://blog.hoxo-m.com/HOXOMinc-blog/tags/report/</link>
+      <link>http://blog.hoxo-m.com/tags/report/</link>
       <pubDate>Sat, 08 Apr 2017 21:32:00 -0900</pubDate>
       
-      <guid>http://blog.hoxo-m.com/HOXOMinc-blog/tags/report/</guid>
+      <guid>http://blog.hoxo-m.com/tags/report/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Reproducible</title>
-      <link>http://blog.hoxo-m.com/HOXOMinc-blog/tags/reproducible/</link>
+      <link>http://blog.hoxo-m.com/tags/reproducible/</link>
       <pubDate>Thu, 20 Apr 2017 08:02:00 -0900</pubDate>
       
-      <guid>http://blog.hoxo-m.com/HOXOMinc-blog/tags/reproducible/</guid>
+      <guid>http://blog.hoxo-m.com/tags/reproducible/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Tutorial</title>
-      <link>http://blog.hoxo-m.com/HOXOMinc-blog/tags/tutorial/</link>
+      <link>http://blog.hoxo-m.com/tags/tutorial/</link>
       <pubDate>Thu, 20 Apr 2017 08:02:00 -0900</pubDate>
       
-      <guid>http://blog.hoxo-m.com/HOXOMinc-blog/tags/tutorial/</guid>
+      <guid>http://blog.hoxo-m.com/tags/tutorial/</guid>
       <description></description>
     </item>
     
