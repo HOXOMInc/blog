@@ -2,13 +2,127 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>株式会社ホクソエムのブログ</title>
-    <link>http://blog.hoxo-m.com/index.xml</link>
+    <link>http://blog.hoxo-m.com/</link>
     <description>Recent content on 株式会社ホクソエムのブログ</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-JP</language>
     <copyright>HOXOM, Inc.</copyright>
-    <lastBuildDate>Sun, 07 May 2017 21:00:00 -0900</lastBuildDate>
-    <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 10 May 2017 19:34:04 -0900</lastBuildDate>
+    <atom:link href="/" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>RStudioアドイン 10選</title>
+      <link>http://blog.hoxo-m.com/2017/05/10/rstudio_addins_selections/</link>
+      <pubDate>Wed, 10 May 2017 19:34:04 -0900</pubDate>
+      
+      <guid>http://blog.hoxo-m.com/2017/05/10/rstudio_addins_selections/</guid>
+      <description>&lt;!-- BLOGDOWN-BODY-BEFORE
+
+/BLOGDOWN-BODY-BEFORE --&gt;
+
+&lt;p&gt;Rユーザのみなさん、RStudio使っていますか。RStudioを使うなら、&lt;a href=&#34;http://rstudio.github.io/rstudioaddins/&#34;&gt;RStudioアドイン&lt;/a&gt;も使いましょう。便利です。&lt;/p&gt;
+&lt;p&gt;… でも、＼&lt;strong&gt;どんなアドインがあるのかわからない！&lt;/strong&gt;／&lt;/p&gt;
+&lt;p&gt;という声をしばしば聞きます。というわけでお気に入りのアドインを10個まとめました。用途ごとに部門を設けて紹介します。&lt;/p&gt;
+&lt;div id=&#34;rstudio&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;RStudioアドインとは&lt;/h2&gt;
+&lt;p&gt;そもそもRStudioアドインとは何か。それを説明しておかないといけませんね。&lt;/p&gt;
+&lt;p&gt;RStudioアドインとは、0.99.878以降のバージョンで実装されているRStudioの一機能です。複雑な処理をボタン一発で実行したり、ショートカットとして利用したり、GUI操作で処理を実行できるようになります。&lt;/p&gt;
+&lt;p&gt;RStudioアドインはメニューバーの「Addins」というボタンあるいは設定されたショートカットから呼び出すことができます。アドインは、Rの関数と同様にパッケージによって提供されているため、該当のパッケージをインストールすることで利用可能になります。&lt;/p&gt;
+&lt;p&gt;使い方やアドインの作成方法は&lt;a href=&#34;http://rstudio.github.io/rstudioaddins/&#34;&gt;公式のドキュメント&lt;/a&gt;または&lt;a href=&#34;http://qiita.com/uri/items/dc3937e9efdeed1ea661&#34;&gt;こちらの記事 (RStudioで気軽にLGTM)&lt;/a&gt;をご覧ください。&lt;/p&gt;
+&lt;p&gt;それではおすすめアドインの紹介に入ります。実用、可視化、文書作成、ネタ系の4つに分けます。簡単な説明と動作画像を貼りますので雰囲気を感じてください！カッコ内でアドインが含まれるパッケージを表示しています。&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&#34;section level2&#34;&gt;
+&lt;h2&gt;実用系&lt;/h2&gt;
+&lt;p&gt;Rを使った作業一般で役立ちそうなアドインです。こちらからは5つ。&lt;/p&gt;
+&lt;div id=&#34;reformat-r-code-addinexamples&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Reformat R Code (addinexamples)&lt;/h3&gt;
+&lt;p&gt;適当なスペースはコードの可読性を高めます。GoogleもHadley Wickhamも演算子の後にはスペースを含めることを推奨しています。&lt;/p&gt;
+&lt;p&gt;このアドインは、選択したコードの可読性を高めるために実行することができます。具体的には、先の演算子間のスペースの自動挿入と、インデントの調整、一行のコードを任意の長さで改行するという機能をもちます。背景の処理に&lt;a href=&#34;https://yihui.name/formatr/&#34;&gt;&lt;strong&gt;formatr&lt;/strong&gt;&lt;/a&gt;パッケージが使われています。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#39;../../../../../../../img/rs_addins_top10_1.gif&#39; align=&#39;center&#39;&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;pipefittr-pipefittr&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;pipefittr (pipefittr)&lt;/h3&gt;
+&lt;p&gt;見やすいコードにするためには、どんどん&lt;a href=&#34;https://CRAN.R-project.org/package=magrittr&#34;&gt;&lt;strong&gt;magrittr&lt;/strong&gt;&lt;/a&gt;パッケージのパイプ演算子を使うと良いです。でも古いコードなど、パイプが使われていないものもあります。そういった場合にこのアドインが役立ちます。このアドインは従来の、複数の関数の処理を入れ子で記述したコードをパイプ処理での書き方に直します (時々失敗してしまうのが玉に瑕)。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#39;../../../../../../../img/rs_addins_top10_2.gif&#39; align=&#39;center&#39;&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;render-reprex-reprex&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Render reprex (reprex)&lt;/h3&gt;
+&lt;p&gt;GitHubやStackOverflowなど、自分の環境で発生した状況を説明するには、言葉だけで再現性を成立させることはできません。やはり、状況を引き起こしているコードがなければいけません。ですが実際は、質問をあげる多くの人が問題の記述だけでコードを書きません。この問題を解決するのに大きく役立つのが&lt;a href=&#34;https://CRAN.R-project.org/package=reprex&#34;&gt;&lt;strong&gt;reprex&lt;/strong&gt;&lt;/a&gt;パッケージです。このパッケージは、GitHub、StackOverflowにRコードと実行結果をコピーできる状態で出力する関数を備えていますが、アドインとしてもその機能を実行することが可能です。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#39;../../../../../../../img/rs_addins_top10_3.gif&#39; align=&#39;center&#39;&gt;&lt;/p&gt;
+&lt;p&gt;対象を、コピーされているコードか、現在の選択範囲か、Rファイル全体かといったものを選んで実行できます。&lt;/p&gt;
+&lt;p&gt;なおこのパッケージの使い方は、こちらの&lt;a href=&#34;http://notchained.hatenablog.com/entry/2017/03/15/215020&#34;&gt;ブログ記事&lt;/a&gt;にも書かれています。ちなみにパッケージ名にもなっているreprexはreproducible exampleの略だそうです。再現性、大事！&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;tidydata-tidyshiny&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;tidydata (tidyshiny)&lt;/h3&gt;
+&lt;p&gt;こちらのアドインは、現在ワークスペースにロードされているデータを対象に&lt;code&gt;tidyr::gather()&lt;/code&gt;を実行する関数です。列の除外指定ができないようですが、コードが吐き出されるのでそれを編集すれば良いですね。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#39;../../../../../../../img/rs_addins_top10_4.gif&#39; align=&#39;center&#39;&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;githubinstall-addin4githubinstall&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;githubinstall (addin4githubinstall)&lt;/h3&gt;
+&lt;p&gt;GitHub上のパッケージをインストールするには&lt;a href=&#34;https://CRAN.R-project.org/package=githubinstall&#34;&gt;&lt;strong&gt;githubinstall&lt;/strong&gt;&lt;/a&gt;パッケージ一択ですが、適当なキーワードでパッケージを探したい…。そんな時が、あると思います！そこで役立つのがこのアドインです。キーワードを入力して、パッケージのリストから検索・インストールすることができます。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#39;../../../../../../../img/rs_addins_top10_5.gif&#39; align=&#39;center&#39;&gt;&lt;/p&gt;
+&lt;p&gt;こちらのアドインは&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;githubinstall&lt;/strong&gt;が提供しているものでなく、&lt;a href=&#34;https://github.com/gepuro/addin4githubinstall&#34;&gt;こちらのリポジトリ&lt;/a&gt;からパッケージをインストールして利用します。&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&#34;section level2&#34;&gt;
+&lt;h2&gt;可視化系&lt;/h2&gt;
+&lt;p&gt;続いてプロットや何かの色を決めるのに便利なアドインを2つ。&lt;/p&gt;
+&lt;div id=&#34;colourpicker-colourpicker&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;colourPicker (colourpicker)&lt;/h3&gt;
+&lt;p&gt;プロットで使われている色を変更したいけどカラーコードなんて覚えていない…。カラーピッカーというアドイン名の通り、色を表示しながら選択するのにこのアドインが便利です。同色の色のパターンも生成することができます。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#39;../../../../../../../img/rs_addins_top10_6.gif&#39; align=&#39;center&#39;&gt;&lt;/p&gt;
+&lt;p&gt;さらにこのパッケージでは、下記画像のようにプロットされた画像で使われている色を選択・変更可能なアドインも提供されています。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#39;../../../../../../../img/rs_addins_colourpicker.png&#39; align=&#39;center&#39;&gt;&lt;/p&gt;
+&lt;p&gt;なお、&lt;a href=&#34;https://CRAN.R-project.org/package=shinyjs&#34;&gt;&lt;strong&gt;shinyjs&lt;/strong&gt;&lt;/a&gt;パッケージでも同じアドインが提供されていましたが、現在は&lt;a href=&#34;https://CRAN.R-project.org/package=colourpicker&#34;&gt;&lt;strong&gt;colourpicker&lt;/strong&gt;&lt;/a&gt;パッケージとして独立したようです。そちらを使いましょう。&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ggplot-theme-assistant-ggthemeassist&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;ggplot Theme Assistant (ggThemeAssist)&lt;/h3&gt;
+&lt;p&gt;ggplot2の図は各種の要素に対して変更を加えることが可能です。しかし自由度が高いぶん、覚えるのが困難でもあります。このアドインは、その問題を解決します。&lt;/p&gt;
+&lt;p&gt;既存のggplot2でのプロットを実行するコードを選択した状態でアドインを実行すると、各要素を変更するためのGUIが起動します。あとは煮るなり焼くなり。お好みの図に調理して、コードを出力しましょう。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#39;../../../../../../../img/rs_addins_top10_7.gif&#39; align=&#39;center&#39;&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;-rmarkdown&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;文書作成 (rmarkdownまわり)系&lt;/h2&gt;
+&lt;p&gt;Rmd形式のファイルで効果的なアドインを2つ。この他にも論文執筆の際の文献管理に役立つアドインやblogdown、bookdownなどでボタン一発ビルドを実行するアドインなどがあります。&lt;/p&gt;
+&lt;div id=&#34;word-count-wordcountaddin&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Word count (wordcountaddin)&lt;/h3&gt;
+&lt;p&gt;選択中のコードに含まれる単語数などを数えて出力します。日本語だと精度が高くないですが、読み終わる時間の目安も出ます。文章を書いている際に良いのではないでしょうか。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#39;../../../../../../../img/rs_addins_top10_8.gif&#39; align=&#39;center&#39;&gt;&lt;/p&gt;
+&lt;p&gt;ちなみにMacで利用する場合、Javaのバージョンでエラーになることがあるかもしれません。その際は&lt;a href=&#34;https://suryu.me/post/rjava_for_sierra/&#34;&gt;次の記事&lt;/a&gt;にあるコードを実行することで解決する可能性があります。&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;wraprmd&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;WrapRmd&lt;/h3&gt;
+&lt;p&gt;RMarkdown内で実行するRコード(インラインコード)の改行を、レンダーに影響を与えずによしなにしてくれるアドインです。パッケージはCRANに登録されていないので&lt;a href=&#34;https://github.com/tjmahr/WrapRmd&#34;&gt;GitHubからインストール&lt;/a&gt;してください。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#39;../../../../../../../img/rs_addins_top10_9.gif&#39; align=&#39;center&#39;&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&#34;section level2&#34;&gt;
+&lt;h2&gt;ネタ系&lt;/h2&gt;
+&lt;p&gt;最後にとっておきのアドインを紹介します。&lt;/p&gt;
+&lt;div id=&#34;add-gifs-giphyr&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Add gifs (giphyr)&lt;/h3&gt;
+&lt;p&gt;Rの作業に疲れた時、ネコに癒されたくなった時、Shia LaBeoufに喝を入れてもらいったくなる時… そんな時にオススメのアドインです。&lt;/p&gt;
+&lt;p&gt;このパッケージは&lt;a href=&#34;http://giphy.com/&#34;&gt;Giphy&lt;/a&gt;のAPIを利用し、おもしろGifを取得するものです。アドインとして、画像の検索機能、貼り付け先や保存先を選べます。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#39;../../../../../../../img/rs_addins_top10_10.gif&#39; align=&#39;center&#39;&gt;&lt;/p&gt;
+&lt;p&gt;ここに挙げた以外にも、みなさまオススメのアドインがございましたらホクソエム&lt;a href=&#34;https://twitter.com/hoxom_inc&#34;&gt;hoxom_inc&lt;/a&gt;までご一報ください！&lt;/p&gt;
+&lt;p&gt;Enjoy!&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+
+
+&lt;!-- BLOGDOWN-HEAD
+
+
+
+
+
+
+/BLOGDOWN-HEAD --&gt;
+</description>
+    </item>
     
     <item>
       <title>「東京ベイエリア・タワーマンション地図」の作成</title>
@@ -16,7 +130,11 @@
       <pubDate>Sun, 07 May 2017 21:00:00 -0900</pubDate>
       
       <guid>http://blog.hoxo-m.com/2017/05/07/tokyo-bay-area-tower-map/</guid>
-      <description>&lt;div class=&#34;section level2&#34;&gt;
+      <description>&lt;!-- BLOGDOWN-BODY-BEFORE
+
+/BLOGDOWN-BODY-BEFORE --&gt;
+
+&lt;div class=&#34;section level2&#34;&gt;
 &lt;h2&gt;はじめに&lt;/h2&gt;
 &lt;p&gt;キュッキュキュッキュ🎧こんばんはDJタカヤナギです😤。&lt;/p&gt;
 &lt;p&gt;今日で連休が終わるという方が大半なのではないでしょうか？ 長い連休明けの月曜日はいつだって嫌なものですね。&lt;/p&gt;
@@ -48,6 +166,17 @@
 &lt;p&gt;Enjoy!!!&lt;/p&gt;
 &lt;iframe src=&#34;/post/tokyo-bay-area-tower-map_files/map.html&#34; name=&#34;in&#34; width=&#34;800&#34; height=&#34;600&#34;&gt;
 &lt;/div&gt;
+
+
+
+&lt;!-- BLOGDOWN-HEAD
+
+
+
+
+
+
+/BLOGDOWN-HEAD --&gt;
 </description>
     </item>
     
@@ -360,13 +489,28 @@ conf &amp;lt;- config::get()&lt;/code&gt;&lt;/pre&gt;
       <pubDate>Tue, 18 Apr 2017 19:40:14 -0900</pubDate>
       
       <guid>http://blog.hoxo-m.com/2017/04/18/takayanagi-san-first/</guid>
-      <description>&lt;div id=&#34;hello-world&#34; class=&#34;section level2&#34;&gt;
+      <description>&lt;!-- BLOGDOWN-BODY-BEFORE
+
+/BLOGDOWN-BODY-BEFORE --&gt;
+
+&lt;div id=&#34;hello-world&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;タカヤナギ=サンのHello, world&lt;/h2&gt;
 &lt;p&gt;こんにちは、ホクソエムの高柳(通称：タカヤナギ＝サン)です。 IT(イット)やプログラミングは苦手なので、BLOG更新の一発目としてR的なHello, worldをしておきます。&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;plot(1:10)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/takayanagi-san-first_files/figure-html/unnamed-chunk-1-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####../content/post/takayanagi-san-first_files/figure-html/unnamed-chunk-1-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;Enjoy!&lt;/p&gt;
 &lt;/div&gt;
+
+
+
+&lt;!-- BLOGDOWN-HEAD
+
+
+
+
+
+
+/BLOGDOWN-HEAD --&gt;
 </description>
     </item>
     
@@ -803,29 +947,6 @@ teramonagi()&lt;/code&gt;&lt;/pre&gt;
       
       <guid>http://blog.hoxo-m.com/page/contact/</guid>
       <description>&lt;div class=&#34;google-form&#34;&gt;&lt;iframe src=&#34;https://docs.google.com/forms/d/e/1FAIpQLSeu1juP3SLIG9Ll1moclNrdAgkViXSIKUoviuy9cJVGn5M1Ew/viewform?embedded=true&#34; width=&#34;800&#34; height=&#34;600&#34; frameborder=&#34;0&#34; style=&#34;border:0&#34;&gt;Loading ...&lt;/iframe&gt;&lt;/div&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>My awesome project</title>
-      <link>http://blog.hoxo-m.com/project/my-awesome-project/</link>
-      <pubDate>Tue, 18 Nov 2014 02:13:50 +0000</pubDate>
-      
-      <guid>http://blog.hoxo-m.com/project/my-awesome-project/</guid>
-      <description>
-
-&lt;h2 id=&#34;about-project&#34;&gt;About project&lt;/h2&gt;
-
-&lt;p&gt;Aenean ipsum justo, semper eu nisl ut, pretium tincidunt sem. Praesent et diam sit amet lacus lobortis dictum a id lacus. Quisque hendrerit sit amet turpis eu varius. Ut id lorem ac felis ultrices tincidunt. Pellentesque consequat arcu ac fringilla imperdiet. Phasellus pellentesque, sapien non pulvinar blandit, sapien ante aliquet felis, vel porttitor sapien ante in lacus. Fusce non urna aliquet, malesuada nibh vel, luctus urna. Phasellus ut lacus molestie, varius purus quis, malesuada lorem.&lt;/p&gt;
-
-&lt;h2 id=&#34;install&#34;&gt;Install&lt;/h2&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;go get -u -v github.com/spf13/hugo
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;docs&#34;&gt;Docs&lt;/h2&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://godoc.org/github.com/spf13/hugo&#34;&gt;https://godoc.org/github.com/spf13/hugo&lt;/a&gt;&lt;/p&gt;
 </description>
     </item>
     

@@ -1,0 +1,113 @@
+---
+title: "RStudioアドイン 10選"
+author: "Shinya Uryu"
+date: 2017-05-10T19:34:04-09:00
+tags: ["tips", "rstudio"]
+---
+
+
+<!-- BLOGDOWN-BODY-BEFORE
+
+/BLOGDOWN-BODY-BEFORE -->
+
+<p>Rユーザのみなさん、RStudio使っていますか。RStudioを使うなら、<a href="http://rstudio.github.io/rstudioaddins/">RStudioアドイン</a>も使いましょう。便利です。</p>
+<p>… でも、＼<strong>どんなアドインがあるのかわからない！</strong>／</p>
+<p>という声をしばしば聞きます。というわけでお気に入りのアドインを10個まとめました。用途ごとに部門を設けて紹介します。</p>
+<div id="rstudio" class="section level2">
+<h2>RStudioアドインとは</h2>
+<p>そもそもRStudioアドインとは何か。それを説明しておかないといけませんね。</p>
+<p>RStudioアドインとは、0.99.878以降のバージョンで実装されているRStudioの一機能です。複雑な処理をボタン一発で実行したり、ショートカットとして利用したり、GUI操作で処理を実行できるようになります。</p>
+<p>RStudioアドインはメニューバーの「Addins」というボタンあるいは設定されたショートカットから呼び出すことができます。アドインは、Rの関数と同様にパッケージによって提供されているため、該当のパッケージをインストールすることで利用可能になります。</p>
+<p>使い方やアドインの作成方法は<a href="http://rstudio.github.io/rstudioaddins/">公式のドキュメント</a>または<a href="http://qiita.com/uri/items/dc3937e9efdeed1ea661">こちらの記事 (RStudioで気軽にLGTM)</a>をご覧ください。</p>
+<p>それではおすすめアドインの紹介に入ります。実用、可視化、文書作成、ネタ系の4つに分けます。簡単な説明と動作画像を貼りますので雰囲気を感じてください！カッコ内でアドインが含まれるパッケージを表示しています。</p>
+</div>
+<div class="section level2">
+<h2>実用系</h2>
+<p>Rを使った作業一般で役立ちそうなアドインです。こちらからは5つ。</p>
+<div id="reformat-r-code-addinexamples" class="section level3">
+<h3>Reformat R Code (addinexamples)</h3>
+<p>適当なスペースはコードの可読性を高めます。GoogleもHadley Wickhamも演算子の後にはスペースを含めることを推奨しています。</p>
+<p>このアドインは、選択したコードの可読性を高めるために実行することができます。具体的には、先の演算子間のスペースの自動挿入と、インデントの調整、一行のコードを任意の長さで改行するという機能をもちます。背景の処理に<a href="https://yihui.name/formatr/"><strong>formatr</strong></a>パッケージが使われています。</p>
+<p><img src='../../../../../../../img/rs_addins_top10_1.gif' align='center'></p>
+</div>
+<div id="pipefittr-pipefittr" class="section level3">
+<h3>pipefittr (pipefittr)</h3>
+<p>見やすいコードにするためには、どんどん<a href="https://CRAN.R-project.org/package=magrittr"><strong>magrittr</strong></a>パッケージのパイプ演算子を使うと良いです。でも古いコードなど、パイプが使われていないものもあります。そういった場合にこのアドインが役立ちます。このアドインは従来の、複数の関数の処理を入れ子で記述したコードをパイプ処理での書き方に直します (時々失敗してしまうのが玉に瑕)。</p>
+<p><img src='../../../../../../../img/rs_addins_top10_2.gif' align='center'></p>
+</div>
+<div id="render-reprex-reprex" class="section level3">
+<h3>Render reprex (reprex)</h3>
+<p>GitHubやStackOverflowなど、自分の環境で発生した状況を説明するには、言葉だけで再現性を成立させることはできません。やはり、状況を引き起こしているコードがなければいけません。ですが実際は、質問をあげる多くの人が問題の記述だけでコードを書きません。この問題を解決するのに大きく役立つのが<a href="https://CRAN.R-project.org/package=reprex"><strong>reprex</strong></a>パッケージです。このパッケージは、GitHub、StackOverflowにRコードと実行結果をコピーできる状態で出力する関数を備えていますが、アドインとしてもその機能を実行することが可能です。</p>
+<p><img src='../../../../../../../img/rs_addins_top10_3.gif' align='center'></p>
+<p>対象を、コピーされているコードか、現在の選択範囲か、Rファイル全体かといったものを選んで実行できます。</p>
+<p>なおこのパッケージの使い方は、こちらの<a href="http://notchained.hatenablog.com/entry/2017/03/15/215020">ブログ記事</a>にも書かれています。ちなみにパッケージ名にもなっているreprexはreproducible exampleの略だそうです。再現性、大事！</p>
+</div>
+<div id="tidydata-tidyshiny" class="section level3">
+<h3>tidydata (tidyshiny)</h3>
+<p>こちらのアドインは、現在ワークスペースにロードされているデータを対象に<code>tidyr::gather()</code>を実行する関数です。列の除外指定ができないようですが、コードが吐き出されるのでそれを編集すれば良いですね。</p>
+<p><img src='../../../../../../../img/rs_addins_top10_4.gif' align='center'></p>
+</div>
+<div id="githubinstall-addin4githubinstall" class="section level3">
+<h3>githubinstall (addin4githubinstall)</h3>
+<p>GitHub上のパッケージをインストールするには<a href="https://CRAN.R-project.org/package=githubinstall"><strong>githubinstall</strong></a>パッケージ一択ですが、適当なキーワードでパッケージを探したい…。そんな時が、あると思います！そこで役立つのがこのアドインです。キーワードを入力して、パッケージのリストから検索・インストールすることができます。</p>
+<p><img src='../../../../../../../img/rs_addins_top10_5.gif' align='center'></p>
+<p>こちらのアドインは</p>
+<p><strong>githubinstall</strong>が提供しているものでなく、<a href="https://github.com/gepuro/addin4githubinstall">こちらのリポジトリ</a>からパッケージをインストールして利用します。</p>
+</div>
+</div>
+<div class="section level2">
+<h2>可視化系</h2>
+<p>続いてプロットや何かの色を決めるのに便利なアドインを2つ。</p>
+<div id="colourpicker-colourpicker" class="section level3">
+<h3>colourPicker (colourpicker)</h3>
+<p>プロットで使われている色を変更したいけどカラーコードなんて覚えていない…。カラーピッカーというアドイン名の通り、色を表示しながら選択するのにこのアドインが便利です。同色の色のパターンも生成することができます。</p>
+<p><img src='../../../../../../../img/rs_addins_top10_6.gif' align='center'></p>
+<p>さらにこのパッケージでは、下記画像のようにプロットされた画像で使われている色を選択・変更可能なアドインも提供されています。</p>
+<p><img src='../../../../../../../img/rs_addins_colourpicker.png' align='center'></p>
+<p>なお、<a href="https://CRAN.R-project.org/package=shinyjs"><strong>shinyjs</strong></a>パッケージでも同じアドインが提供されていましたが、現在は<a href="https://CRAN.R-project.org/package=colourpicker"><strong>colourpicker</strong></a>パッケージとして独立したようです。そちらを使いましょう。</p>
+</div>
+<div id="ggplot-theme-assistant-ggthemeassist" class="section level3">
+<h3>ggplot Theme Assistant (ggThemeAssist)</h3>
+<p>ggplot2の図は各種の要素に対して変更を加えることが可能です。しかし自由度が高いぶん、覚えるのが困難でもあります。このアドインは、その問題を解決します。</p>
+<p>既存のggplot2でのプロットを実行するコードを選択した状態でアドインを実行すると、各要素を変更するためのGUIが起動します。あとは煮るなり焼くなり。お好みの図に調理して、コードを出力しましょう。</p>
+<p><img src='../../../../../../../img/rs_addins_top10_7.gif' align='center'></p>
+</div>
+</div>
+<div id="-rmarkdown" class="section level2">
+<h2>文書作成 (rmarkdownまわり)系</h2>
+<p>Rmd形式のファイルで効果的なアドインを2つ。この他にも論文執筆の際の文献管理に役立つアドインやblogdown、bookdownなどでボタン一発ビルドを実行するアドインなどがあります。</p>
+<div id="word-count-wordcountaddin" class="section level3">
+<h3>Word count (wordcountaddin)</h3>
+<p>選択中のコードに含まれる単語数などを数えて出力します。日本語だと精度が高くないですが、読み終わる時間の目安も出ます。文章を書いている際に良いのではないでしょうか。</p>
+<p><img src='../../../../../../../img/rs_addins_top10_8.gif' align='center'></p>
+<p>ちなみにMacで利用する場合、Javaのバージョンでエラーになることがあるかもしれません。その際は<a href="https://suryu.me/post/rjava_for_sierra/">次の記事</a>にあるコードを実行することで解決する可能性があります。</p>
+</div>
+<div id="wraprmd" class="section level3">
+<h3>WrapRmd</h3>
+<p>RMarkdown内で実行するRコード(インラインコード)の改行を、レンダーに影響を与えずによしなにしてくれるアドインです。パッケージはCRANに登録されていないので<a href="https://github.com/tjmahr/WrapRmd">GitHubからインストール</a>してください。</p>
+<p><img src='../../../../../../../img/rs_addins_top10_9.gif' align='center'></p>
+</div>
+</div>
+<div class="section level2">
+<h2>ネタ系</h2>
+<p>最後にとっておきのアドインを紹介します。</p>
+<div id="add-gifs-giphyr" class="section level3">
+<h3>Add gifs (giphyr)</h3>
+<p>Rの作業に疲れた時、ネコに癒されたくなった時、Shia LaBeoufに喝を入れてもらいったくなる時… そんな時にオススメのアドインです。</p>
+<p>このパッケージは<a href="http://giphy.com/">Giphy</a>のAPIを利用し、おもしろGifを取得するものです。アドインとして、画像の検索機能、貼り付け先や保存先を選べます。</p>
+<p><img src='../../../../../../../img/rs_addins_top10_10.gif' align='center'></p>
+<p>ここに挙げた以外にも、みなさまオススメのアドインがございましたらホクソエム<a href="https://twitter.com/hoxom_inc">hoxom_inc</a>までご一報ください！</p>
+<p>Enjoy!</p>
+</div>
+</div>
+
+
+
+<!-- BLOGDOWN-HEAD
+
+
+
+
+
+
+/BLOGDOWN-HEAD -->
