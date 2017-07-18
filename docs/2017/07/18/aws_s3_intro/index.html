@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns#">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>awe.s3パッケージでRからのAWS S3とのファイルやりとりを行う &middot; </title>
+        <meta name="description" content="ドーモ。ホクソエムです。更新が久しくなってしまいました。ホクソエムでは現在、Amazon Web Service (AWS)を利用していないのですが、本職の方でS">
+        <meta name="HandheldFriendly" content="True">
+        <meta name="MobileOptimized" content="320">
+        <meta name="generator" content="Hugo" />
+        <meta name="robots" content="index,follow">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta property="og:title" content="awe.s3パッケージでRからのAWS S3とのファイルやりとりを行う">
+<meta property="og:description" content="ドーモ。ホクソエムです。更新が久しくなってしまいました。ホクソエムでは現在、Amazon Web Service (AWS)を利用していないのですが、本職の方でS">
+<meta property="og:type" content="article">
+<meta property="og:url" content="/http://blog.hoxo-m.com/2017/07/18/aws_s3_intro/">
+        <link rel="stylesheet" href="/http://blog.hoxo-m.comdist/styles.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,600,700,300&subset=latin,cyrillic-ext,latin-ext,cyrillic">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        
+        
+
+  <meta name="twitter:card" content="summary"/>
+
+
+
+<meta name="twitter:text:title" content="awe.s3パッケージでRからのAWS S3とのファイルやりとりを行う"/>
+<meta name="twitter:title" content="awe.s3パッケージでRからのAWS S3とのファイルやりとりを行う"/>
+<meta name="twitter:description" content="ドーモ。ホクソエムです。更新が久しくなってしまいました。ホクソエムでは現在、Amazon Web Service (AWS)を利用していないのですが、本職の方でS"/>
+
+
+        <meta name="twitter:image" content="http://blog.hoxo-m.com/img/hoxom_inc_logo_crop250.png"/>
+    </head>
+    <body>
+        
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-87778111-3', 'auto');
+ga('send', 'pageview');
+</script>
+
+
+        <div id="wrapper">
+            <header class="site-header">
+                <div class="container">
+                    <div class="site-title-wrapper">
+                        
+                            <h1 class="site-title">
+                                <a title="株式会社ホクソエムのブログ" href="/http://blog.hoxo-m.com">株式会社ホクソエムのブログ</a>
+                            </h1>
+                        
+                        <a class="button-square" href="/http://blog.hoxo-m.comindex.xml"><i class="fa fa-rss"></i></a>
+                        
+                            <a class="button-square button-social hint--top" data-hint="Twitter" title="Twitter" href="https://twitter.com/hoxom_inc">
+                                <i class="fa fa-twitter"></i>
+                            </a>
+                        
+                        
+                        
+                            <a class="button-square button-social hint--top" data-hint="Github" title="Github" href="https://github.com/HOXOMInc">
+                                <i class="fa fa-github-alt"></i>
+                            </a>
+                        
+                        
+                        
+                        
+                        
+                    </div>
+
+                    <ul class="site-nav">
+                        
+    <li class="site-nav-item">
+        <a title="Blog" href="/http:/blog.hoxo-m.com/">Blog</a>
+    </li>
+
+    <li class="site-nav-item">
+        <a title="Contact" href="/http:/blog.hoxo-m.com/page/contact/">Contact</a>
+    </li>
+
+    <li class="site-nav-item">
+        <a title="About" href="/http:/blog.hoxo-m.com/page/about/">About</a>
+    </li>
+
+                    </ul>
+                </div>
+            </header>
+
+            <div id="container">
+
+
+<div class="container">
+    <article class="post-container" itemscope="" itemtype="http://schema.org/BlogPosting">
+        <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">awe.s3パッケージでRからのAWS S3とのファイルやりとりを行う</h1>
+    
+    <p class="post-date">
+        <span>Published <time datetime="2017-07-18" itemprop="datePublished">Tue, Jul 18, 2017</time></span>
+        <span>by</span>
+        <span itemscope="" itemprop="author" itemtype="https://schema.org/Person">
+            <span itemprop="name">
+                <a href="" itemprop="url" rel="author">Shinya Uryu</a>
+            </span>
+        </span>
+    </p>
+</header>
+
+        <div class="post-content clearfix" itemprop="articleBody">
+    
+
+    <p>ドーモ。ホクソエムです。更新が久しくなってしまいました。ホクソエムでは現在、Amazon Web Service (AWS)を利用していないのですが、本職の方でS3に触れる機会があったので、RからS3への操作を行うためのパッケージ <strong>awe.s3</strong> を紹介したいと思います。</p>
+<p>ASW S3とは、AWSが提供するサービスの一つで、オンラインでのファイルストレージとして利用できます。ストレージするファイルの容量・種類は問わないので、一時的なデータや画像の保存先として使われているのではないでしょうか。また、柔軟にアクセス制限やファイルのライフサイクル（自動的な削除）がかけられるのも特徴です。S3では、バケットと呼ばれるフォルダのような構造と、オブジェクト（データ）を管理します。</p>
+<p><strong>awe.s3</strong>パッケージは、数多くの便利なRパッケージを行っている<a href="https://ropensci.org">ROpenSci</a>のメンバーでもあるThomas J. Leeperらが活動する<a href="https://github.com/cloudyr">cloudyr</a>というRのチームが開発しています。cloudyrのリポジトリには、今回紹介する<strong>awe.s3</strong>のほか、同じAWSのサービスであるES2管理やLambdaのための<strong>aws.ec2</strong>、<strong>aws.lambda</strong>なども含まれています。</p>
+<p><a href="https://github.com/cloudyr/aws.s3" class="uri">https://github.com/cloudyr/aws.s3</a></p>
+<p><strong>awe.s3</strong>はCRANに登録されていますので、次のコマンドでインストールしましょう。また、S3の操作に必要なアクセスキーとIDは、IAM (Identity and Access Management) Management Consoleから発行しておいてください。</p>
+<pre class="r"><code>install.packages(&quot;aws.s3&quot;, dependencies = TRUE)</code></pre>
+<pre class="r"><code>library(aws.s3)</code></pre>
+<div class="section level2">
+<h2>アカウントとの紐付け</h2>
+<p>早速、ストレージしたファイルへのアクセスを行いたいところですが、まずはアクセスキーIDとシークレットキーを使った認証を行うことが必要です。</p>
+<p>cloudyrが携わるAWS関係のRパッケージでは、<code>Sys.setenv()</code>で設定されている環境変数を利用します。これらが<code>.Rprofile</code>等に記載されていない場合は、コンソールで<code>Sys.setenv()</code>を行いましょう。必要な情報は、アクセスキーID、シークレットキー、利用しているリージョン（地域）です。</p>
+<pre class="r"><code># 環境変数の値を確認
+Sys.getenv(&quot;AWS_DEFAULT_REGION&quot;)
+# [1] &quot;&quot;
+
+Sys.setenv(&quot;AWS_DEFAULT_REGION&quot; = &quot;&lt;リージョン&gt;&quot;, # us-east-2 など
+           &quot;AWS_ACCESS_KEY_ID&quot; = &quot;&lt;アクセスキーID&gt;&quot;,
+           &quot;AWS_SECRET_ACCESS_KEY&quot; = &quot;&lt;シークレットキー&gt;&quot;)</code></pre>
+<p>複数アカウントがある場合、AWSの発行するcredentialsファイルを使った署名を行うこともできます。これには<strong>awe.s3</strong>インストール時に依存パッケージとしてインストールされる<strong>aws.signature</strong>の<code>use_credentials()</code>を使います。</p>
+<pre class="r"><code># defaultのアカウント情報を用いた署名
+aws.signature::use_credentials()
+
+# hoxouri ユーザのアカウント情報を利用する場合
+aws.signature::use_credentials(profile = &quot;hoxouri&quot;)</code></pre>
+<p>接続が成功しているかを確かめるため、バケットの一覧を表示してみます。</p>
+<pre class="r"><code>bucketlist()
+#              Bucket             CreationDate
+# 1 aws.s3.test170418 2017-04-18T04:35:22.000Z
+# 2        hoxom-blog 2017-07-18T11:02:47.000Z</code></pre>
+<p>うまくできているようですね。</p>
+<p>特定のバケットのオブジェクトを出力するには<code>get_bucket()</code>を使います。</p>
+<pre class="r"><code>get_bucket(&quot;aws.s3.test170418&quot;)
+# Bucket: aws.s3.test170418 
+# 
+# named list()</code></pre>
+<p>どうやらこのバケットにはまだ何も入っていないようです。</p>
+</div>
+<div class="section level2">
+<h2>オブジェクト操作</h2>
+<p>それでは、バケットに対してオブジェクト（データ）を保存したり、バケット内のオブジェクトへの操作を行いましょう。<strong>awe.s3</strong>では、次のようなオブジェクト操作が可能です。</p>
+<ul>
+<li>Rオブジェクト(.Rdata, .rds)の読み書き (<code>s3save()</code>, <code>s3saveRDS()</code>)</li>
+<li>R関数を使ったRへの読み書き (<code>s3read_using()</code>, <code>s3write_using()</code>)</li>
+<li>ローカルファイルのバケットへの保存 (<code>put_object()</code>)</li>
+<li>バケットからのローカルへの保存 (<code>get_object()</code>)</li>
+<li>バケット、オブジェクトの削除 (<code>delete_bucket()</code>, <code>delete_object()</code>)</li>
+</ul>
+<p>例として、mtcarsオブジェクト(データフレーム)をS3に保存します。Rオブジェクトとして保存したい時は<code>s3save()</code>で行います。</p>
+<pre class="r"><code>s3save(mtcars, bucket = &quot;aws.s3.test170418&quot;, object = &quot;mtcars.rds&quot;)</code></pre>
+<p>第一引数で対象のRオブジェクト、第二引数で対象のバケット名、第三引数のobject引数ではオブジェクト名を与えます。関数の実行後、コンソールには何も表示されませんが、エラーがでなければアップロードは成功しているはずです。改めてバケットの中身を出力してみましょう。</p>
+<pre class="r"><code>get_bucket(&quot;aws.s3.test170418&quot;)
+# Bucket: aws.s3.test170418 
+# 
+# $Contents
+# Key:            mtcars.rds 
+# LastModified:   2017-07-18T11:33:04.000Z 
+# ETag:           &quot;1bf2269b855ca97b628582dc29962eb1&quot; 
+# Size (B):       1235 
+# Owner:          suika1127 
+# Storage class:  STANDARD</code></pre>
+<p>次はcsvをアップロードする例です。Rオブジェクトではなくcsvなどのファイルで保存したい時は<code>readr::write_csv()</code>などの関数を使いテキストファイルにしておきましょう。またその際は<code>put_object()</code>を使い、ファイルのアップロードを行います。</p>
+<pre class="r"><code>mtcars %&gt;% 
+  readr::write_csv(&quot;sample_mtcars.csv&quot;)
+put_object(file = &quot;sample_mtcars.csv&quot;, 
+           object = &quot;sample_mtcars.csv&quot;, 
+           # バケットにはフォルダを作ることができますが、bucket引数で指定（なければ作成される）できます
+           bucket = &quot;aws.s3.test170418/csv&quot;)</code></pre>
+<p>今度は保存したオブジェクトをRで利用可能な状態にします。対象がRオブジェクトであれば<code>s3load</code>、<code>readr</code>や<code>readxl</code>で読み込めるファイルであれば<code>s3read_using()</code>を用います。</p>
+<pre class="r"><code>s3load(&quot;mtcars.rds&quot;, bucket = &quot;aws.s3.test170418&quot;)
+ls()
+# [1] &quot;mtcars&quot;
+
+s3read_using(readr::read_csv, object = &quot;sample.csv&quot;, 
+             bucket = &quot;aws.s3.test170418/csv&quot;)</code></pre>
+<p>rdsファイルに保存したmtcarsオブジェクトが利用できるようになりました。</p>
+<p>私も使い始めたばかりで、<strong>aws.s3</strong>パッケージの全てを紹介しきれませんが、基本的なことはできたかと思います。つどコンソールを叩かず、集計結果等を保存できる、データを引っ張ってこれるので便利ですね。</p>
+<p>Enjoy!</p>
+</div>
+
+</div>
+
+        <footer class="post-footer clearfix">
+    
+        <p class="post-tags">
+            <span>Tagged:</span>
+            
+            
+                <a href="/http:/blog.hoxo-m.com/tags/package/">package</a>, 
+            
+                <a href="/http:/blog.hoxo-m.com/tags/aws/">aws</a>
+            
+        </p>
+    
+
+    <div class="share">
+        
+            <a class="icon-twitter" href="https://twitter.com/intent/tweet?original_referer=http://blog.hoxo-m.com%2fhttp%3a%2f%2fblog.hoxo-m.com%2f2017%2f07%2f18%2faws_s3_intro%2f&ref_src=twsrc&text=awe.s3%e3%83%91%e3%83%83%e3%82%b1%e3%83%bc%e3%82%b8%e3%81%a7R%e3%81%8b%e3%82%89%e3%81%aeAWS%20S3%e3%81%a8%e3%81%ae%e3%83%95%e3%82%a1%e3%82%a4%e3%83%ab%e3%82%84%e3%82%8a%e3%81%a8%e3%82%8a%e3%82%92%e8%a1%8c%e3%81%86&tw_p=tweetbutton&url=http://blog.hoxo-m.com%2fhttp%3a%2f%2fblog.hoxo-m.com%2f2017%2f07%2f18%2faws_s3_intro%2f"
+                onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                <i class="fa fa-twitter"></i>
+                <span class="hidden">Twitter</span>
+            </a>
+        
+
+        
+            <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.hoxo-m.com%2fhttp%3a%2f%2fblog.hoxo-m.com%2f2017%2f07%2f18%2faws_s3_intro%2f"
+                onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                <i class="fa fa-facebook"></i>
+                <span class="hidden">Facebook</span>
+            </a>
+        
+
+        
+            <a class="icon-google-plus" href="https://plus.google.com/share?url=http://blog.hoxo-m.com%2fhttp%3a%2f%2fblog.hoxo-m.com%2f2017%2f07%2f18%2faws_s3_intro%2f"
+              onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+              <i class="fa fa-google-plus"></i>
+                <span class="hidden">Google+</span>
+            </a>
+        
+        
+    </div>
+</footer>
+
+        
+    </article>
+</div>
+
+            </div>
+        </div>
+
+        <footer class="footer">
+            <div class="container">
+                <div class="site-title-wrapper">
+                    <h1 class="site-title">
+                        <a title="株式会社ホクソエムのブログ" href="/http://blog.hoxo-m.com">株式会社ホクソエムのブログ</a>
+                    </h1>
+                    <a class="button-square button-jump-top js-jump-top" href="#">
+                        <i class="fa fa-angle-up"></i>
+                    </a>
+                </div>
+
+                <p class="footer-copyright">
+                    <span>&copy; HOXOM, Inc. 2017 / Powered by <a href="https://gohugo.io/">Hugo</a></span>
+                </p>
+                <p class="footer-copyright">
+                    <span><a href="https://github.com/roryg/ghostwriter">Ghostwriter theme</a> By <a href="http://jollygoodthemes.com">JollyGoodThemes</a></span>
+                    <span>/ <a href="https://github.com/jbub/ghostwriter">Ported</a> to Hugo By <a href="https://github.com/jbub">jbub</a></span>
+                </p>
+            </div>
+        </footer>
+
+        <script src="/http://blog.hoxo-m.comjs/jquery-1.11.3.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js"></script>
+        <script src="/http://blog.hoxo-m.comjs/jquery.fitvids.js"></script>
+        <script src="/http://blog.hoxo-m.comjs/scripts.js"></script>
+    </body>
+</html>
+
