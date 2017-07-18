@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Aws on 株式会社ホクソエムのブログ</title>
-    <link>http://blog.hoxo-m.com/http://blog.hoxo-m.com/tags/aws/</link>
+    <link>http://blog.hoxo-m.com/tags/aws/</link>
     <description>Recent content in Aws on 株式会社ホクソエムのブログ</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-JP</language>
     <copyright>HOXOM, Inc.</copyright>
     <lastBuildDate>Tue, 18 Jul 2017 21:02:11 -0900</lastBuildDate>
-    <atom:link href="/http://blog.hoxo-m.com/tags/aws/" rel="self" type="application/rss+xml" />
+    <atom:link href="http://blog.hoxo-m.com/tags/aws/" rel="self" type="application/rss+xml" />
     
     <item>
       <title>awe.s3パッケージでRからのAWS S3とのファイルやりとりを行う</title>
-      <link>http://blog.hoxo-m.com/http://blog.hoxo-m.com/2017/07/18/aws_s3_intro/</link>
+      <link>http://blog.hoxo-m.com/2017/07/18/aws_s3_intro/</link>
       <pubDate>Tue, 18 Jul 2017 21:02:11 -0900</pubDate>
       
-      <guid>http://blog.hoxo-m.com/http://blog.hoxo-m.com/2017/07/18/aws_s3_intro/</guid>
+      <guid>http://blog.hoxo-m.com/2017/07/18/aws_s3_intro/</guid>
       <description>&lt;p&gt;ドーモ。ホクソエムです。更新が久しくなってしまいました。ホクソエムでは現在、Amazon Web Service (AWS)を利用していないのですが、本職の方でS3に触れる機会があったので、RからS3への操作を行うためのパッケージ &lt;strong&gt;awe.s3&lt;/strong&gt; を紹介したいと思います。&lt;/p&gt;
 &lt;p&gt;ASW S3とは、AWSが提供するサービスの一つで、オンラインでのファイルストレージとして利用できます。ストレージするファイルの容量・種類は問わないので、一時的なデータや画像の保存先として使われているのではないでしょうか。また、柔軟にアクセス制限やファイルのライフサイクル（自動的な削除）がかけられるのも特徴です。S3では、バケットと呼ばれるフォルダのような構造と、オブジェクト（データ）を管理します。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;awe.s3&lt;/strong&gt;パッケージは、数多くの便利なRパッケージを行っている&lt;a href=&#34;https://ropensci.org&#34;&gt;ROpenSci&lt;/a&gt;のメンバーでもあるThomas J. Leeperらが活動する&lt;a href=&#34;https://github.com/cloudyr&#34;&gt;cloudyr&lt;/a&gt;というRのチームが開発しています。cloudyrのリポジトリには、今回紹介する&lt;strong&gt;awe.s3&lt;/strong&gt;のほか、同じAWSのサービスであるES2管理やLambdaのための&lt;strong&gt;aws.ec2&lt;/strong&gt;、&lt;strong&gt;aws.lambda&lt;/strong&gt;なども含まれています。&lt;/p&gt;
