@@ -7,8 +7,95 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-JP</language>
     <copyright>HOXOM, Inc.</copyright>
-    <lastBuildDate>Wed, 10 May 2017 19:34:04 -0900</lastBuildDate>
-    <atom:link href="/" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 18 Jul 2017 21:02:11 -0900</lastBuildDate>
+    <atom:link href="http://blog.hoxo-m.com/" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>awe.s3パッケージでRからのAWS S3とのファイルやりとりを行う</title>
+      <link>http://blog.hoxo-m.com/2017/07/18/aws_s3_intro/</link>
+      <pubDate>Tue, 18 Jul 2017 21:02:11 -0900</pubDate>
+      
+      <guid>http://blog.hoxo-m.com/2017/07/18/aws_s3_intro/</guid>
+      <description>&lt;p&gt;ドーモ。ホクソエムです。更新が久しくなってしまいました。ホクソエムでは現在、Amazon Web Service (AWS)を利用していないのですが、本職の方でS3に触れる機会があったので、RからS3への操作を行うためのパッケージ &lt;strong&gt;awe.s3&lt;/strong&gt; を紹介したいと思います。&lt;/p&gt;
+&lt;p&gt;ASW S3とは、AWSが提供するサービスの一つで、オンラインでのファイルストレージとして利用できます。ストレージするファイルの容量・種類は問わないので、一時的なデータや画像の保存先として使われているのではないでしょうか。また、柔軟にアクセス制限やファイルのライフサイクル（自動的な削除）がかけられるのも特徴です。S3では、バケットと呼ばれるフォルダのような構造と、オブジェクト（データ）を管理します。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;awe.s3&lt;/strong&gt;パッケージは、数多くの便利なRパッケージを行っている&lt;a href=&#34;https://ropensci.org&#34;&gt;ROpenSci&lt;/a&gt;のメンバーでもあるThomas J. Leeperらが活動する&lt;a href=&#34;https://github.com/cloudyr&#34;&gt;cloudyr&lt;/a&gt;というRのチームが開発しています。cloudyrのリポジトリには、今回紹介する&lt;strong&gt;awe.s3&lt;/strong&gt;のほか、同じAWSのサービスであるES2管理やLambdaのための&lt;strong&gt;aws.ec2&lt;/strong&gt;、&lt;strong&gt;aws.lambda&lt;/strong&gt;なども含まれています。&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/cloudyr/aws.s3&#34; class=&#34;uri&#34;&gt;https://github.com/cloudyr/aws.s3&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;awe.s3&lt;/strong&gt;はCRANに登録されていますので、次のコマンドでインストールしましょう。また、S3の操作に必要なアクセスキーとIDは、IAM (Identity and Access Management) Management Consoleから発行しておいてください。&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;install.packages(&amp;quot;aws.s3&amp;quot;, dependencies = TRUE)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(aws.s3)&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&#34;section level2&#34;&gt;
+&lt;h2&gt;アカウントとの紐付け&lt;/h2&gt;
+&lt;p&gt;早速、ストレージしたファイルへのアクセスを行いたいところですが、まずはアクセスキーIDとシークレットキーを使った認証を行うことが必要です。&lt;/p&gt;
+&lt;p&gt;cloudyrが携わるAWS関係のRパッケージでは、&lt;code&gt;Sys.setenv()&lt;/code&gt;で設定されている環境変数を利用します。これらが&lt;code&gt;.Rprofile&lt;/code&gt;等に記載されていない場合は、コンソールで&lt;code&gt;Sys.setenv()&lt;/code&gt;を行いましょう。必要な情報は、アクセスキーID、シークレットキー、利用しているリージョン（地域）です。&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# 環境変数の値を確認
+Sys.getenv(&amp;quot;AWS_DEFAULT_REGION&amp;quot;)
+# [1] &amp;quot;&amp;quot;
+
+Sys.setenv(&amp;quot;AWS_DEFAULT_REGION&amp;quot; = &amp;quot;&amp;lt;リージョン&amp;gt;&amp;quot;, # us-east-2 など
+           &amp;quot;AWS_ACCESS_KEY_ID&amp;quot; = &amp;quot;&amp;lt;アクセスキーID&amp;gt;&amp;quot;,
+           &amp;quot;AWS_SECRET_ACCESS_KEY&amp;quot; = &amp;quot;&amp;lt;シークレットキー&amp;gt;&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;複数アカウントがある場合、AWSの発行するcredentialsファイルを使った署名を行うこともできます。これには&lt;strong&gt;awe.s3&lt;/strong&gt;インストール時に依存パッケージとしてインストールされる&lt;strong&gt;aws.signature&lt;/strong&gt;の&lt;code&gt;use_credentials()&lt;/code&gt;を使います。&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# defaultのアカウント情報を用いた署名
+aws.signature::use_credentials()
+
+# hoxouri ユーザのアカウント情報を利用する場合
+aws.signature::use_credentials(profile = &amp;quot;hoxouri&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;接続が成功しているかを確かめるため、バケットの一覧を表示してみます。&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;bucketlist()
+#              Bucket             CreationDate
+# 1 aws.s3.test170418 2017-04-18T04:35:22.000Z
+# 2        hoxom-blog 2017-07-18T11:02:47.000Z&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;うまくできているようですね。&lt;/p&gt;
+&lt;p&gt;特定のバケットのオブジェクトを出力するには&lt;code&gt;get_bucket()&lt;/code&gt;を使います。&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;get_bucket(&amp;quot;aws.s3.test170418&amp;quot;)
+# Bucket: aws.s3.test170418 
+# 
+# named list()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;どうやらこのバケットにはまだ何も入っていないようです。&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&#34;section level2&#34;&gt;
+&lt;h2&gt;オブジェクト操作&lt;/h2&gt;
+&lt;p&gt;それでは、バケットに対してオブジェクト（データ）を保存したり、バケット内のオブジェクトへの操作を行いましょう。&lt;strong&gt;awe.s3&lt;/strong&gt;では、次のようなオブジェクト操作が可能です。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Rオブジェクト(.Rdata, .rds)の読み書き (&lt;code&gt;s3save()&lt;/code&gt;, &lt;code&gt;s3saveRDS()&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;R関数を使ったRへの読み書き (&lt;code&gt;s3read_using()&lt;/code&gt;, &lt;code&gt;s3write_using()&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;ローカルファイルのバケットへの保存 (&lt;code&gt;put_object()&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;バケットからのローカルへの保存 (&lt;code&gt;get_object()&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;バケット、オブジェクトの削除 (&lt;code&gt;delete_bucket()&lt;/code&gt;, &lt;code&gt;delete_object()&lt;/code&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;例として、mtcarsオブジェクト(データフレーム)をS3に保存します。Rオブジェクトとして保存したい時は&lt;code&gt;s3save()&lt;/code&gt;で行います。&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;s3save(mtcars, bucket = &amp;quot;aws.s3.test170418&amp;quot;, object = &amp;quot;mtcars.rds&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;第一引数で対象のRオブジェクト、第二引数で対象のバケット名、第三引数のobject引数ではオブジェクト名を与えます。関数の実行後、コンソールには何も表示されませんが、エラーがでなければアップロードは成功しているはずです。改めてバケットの中身を出力してみましょう。&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;get_bucket(&amp;quot;aws.s3.test170418&amp;quot;)
+# Bucket: aws.s3.test170418 
+# 
+# $Contents
+# Key:            mtcars.rds 
+# LastModified:   2017-07-18T11:33:04.000Z 
+# ETag:           &amp;quot;1bf2269b855ca97b628582dc29962eb1&amp;quot; 
+# Size (B):       1235 
+# Owner:          suika1127 
+# Storage class:  STANDARD&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;次はcsvをアップロードする例です。Rオブジェクトではなくcsvなどのファイルで保存したい時は&lt;code&gt;readr::write_csv()&lt;/code&gt;などの関数を使いテキストファイルにしておきましょう。またその際は&lt;code&gt;put_object()&lt;/code&gt;を使い、ファイルのアップロードを行います。&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mtcars %&amp;gt;% 
+  readr::write_csv(&amp;quot;sample_mtcars.csv&amp;quot;)
+put_object(file = &amp;quot;sample_mtcars.csv&amp;quot;, 
+           object = &amp;quot;sample_mtcars.csv&amp;quot;, 
+           # バケットにはフォルダを作ることができますが、bucket引数で指定（なければ作成される）できます
+           bucket = &amp;quot;aws.s3.test170418/csv&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;今度は保存したオブジェクトをRで利用可能な状態にします。対象がRオブジェクトであれば&lt;code&gt;s3load&lt;/code&gt;、&lt;code&gt;readr&lt;/code&gt;や&lt;code&gt;readxl&lt;/code&gt;で読み込めるファイルであれば&lt;code&gt;s3read_using()&lt;/code&gt;を用います。&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;s3load(&amp;quot;mtcars.rds&amp;quot;, bucket = &amp;quot;aws.s3.test170418&amp;quot;)
+ls()
+# [1] &amp;quot;mtcars&amp;quot;
+
+s3read_using(readr::read_csv, object = &amp;quot;sample.csv&amp;quot;, 
+             bucket = &amp;quot;aws.s3.test170418/csv&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;rdsファイルに保存したmtcarsオブジェクトが利用できるようになりました。&lt;/p&gt;
+&lt;p&gt;私も使い始めたばかりで、&lt;strong&gt;aws.s3&lt;/strong&gt;パッケージの全てを紹介しきれませんが、基本的なことはできたかと思います。つどコンソールを叩かず、集計結果等を保存できる、データを引っ張ってこれるので便利ですね。&lt;/p&gt;
+&lt;p&gt;Enjoy!&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
     
     <item>
       <title>RStudioアドイン 10選</title>
@@ -130,11 +217,7 @@
       <pubDate>Sun, 07 May 2017 21:00:00 -0900</pubDate>
       
       <guid>http://blog.hoxo-m.com/2017/05/07/tokyo-bay-area-tower-map/</guid>
-      <description>&lt;!-- BLOGDOWN-BODY-BEFORE
-
-/BLOGDOWN-BODY-BEFORE --&gt;
-
-&lt;div class=&#34;section level2&#34;&gt;
+      <description>&lt;div class=&#34;section level2&#34;&gt;
 &lt;h2&gt;はじめに&lt;/h2&gt;
 &lt;p&gt;キュッキュキュッキュ🎧こんばんはDJタカヤナギです😤。&lt;/p&gt;
 &lt;p&gt;今日で連休が終わるという方が大半なのではないでしょうか？ 長い連休明けの月曜日はいつだって嫌なものですね。&lt;/p&gt;
@@ -162,21 +245,10 @@
 &lt;div class=&#34;section level2&#34;&gt;
 &lt;h2&gt;東京ベイエリア・タワーマンション地図&lt;/h2&gt;
 &lt;p&gt;出来上がった結果がこちらです。ベイエリアと言いながら街中まで入ってしまっているのを除くのは読者への課題とします。&lt;/p&gt;
-&lt;p&gt;また、&lt;a href=&#34;/post/tokyo-bay-area-tower-map_files/map.html&#34;&gt;こちら&lt;/a&gt;に飛べば全画面にて表示されます。&lt;/p&gt;
+&lt;p&gt;また、&lt;a href=&#34;http://blog.hoxo-m.com/post/tokyo-bay-area-tower-map_files/map.html&#34;&gt;こちら&lt;/a&gt;に飛べば全画面にて表示されます。&lt;/p&gt;
 &lt;p&gt;Enjoy!!!&lt;/p&gt;
-&lt;iframe src=&#34;/post/tokyo-bay-area-tower-map_files/map.html&#34; name=&#34;in&#34; width=&#34;800&#34; height=&#34;600&#34;&gt;
+&lt;iframe src=&#34;http://blog.hoxo-m.com/post/tokyo-bay-area-tower-map_files/map.html&#34; name=&#34;in&#34; width=&#34;800&#34; height=&#34;600&#34;&gt;
 &lt;/div&gt;
-
-
-
-&lt;!-- BLOGDOWN-HEAD
-
-
-
-
-
-
-/BLOGDOWN-HEAD --&gt;
 </description>
     </item>
     
@@ -489,28 +561,13 @@ conf &amp;lt;- config::get()&lt;/code&gt;&lt;/pre&gt;
       <pubDate>Tue, 18 Apr 2017 19:40:14 -0900</pubDate>
       
       <guid>http://blog.hoxo-m.com/2017/04/18/takayanagi-san-first/</guid>
-      <description>&lt;!-- BLOGDOWN-BODY-BEFORE
-
-/BLOGDOWN-BODY-BEFORE --&gt;
-
-&lt;div id=&#34;hello-world&#34; class=&#34;section level2&#34;&gt;
+      <description>&lt;div id=&#34;hello-world&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;タカヤナギ=サンのHello, world&lt;/h2&gt;
 &lt;p&gt;こんにちは、ホクソエムの高柳(通称：タカヤナギ＝サン)です。 IT(イット)やプログラミングは苦手なので、BLOG更新の一発目としてR的なHello, worldをしておきます。&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;plot(1:10)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;#####../content/post/takayanagi-san-first_files/figure-html/unnamed-chunk-1-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://blog.hoxo-m.com/post/takayanagi-san-first_files/figure-html/unnamed-chunk-1-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;Enjoy!&lt;/p&gt;
 &lt;/div&gt;
-
-
-
-&lt;!-- BLOGDOWN-HEAD
-
-
-
-
-
-
-/BLOGDOWN-HEAD --&gt;
 </description>
     </item>
     
@@ -545,7 +602,7 @@ dj &amp;lt;- load.image(u)
 print(dj)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;## Image. Width: 960 pix Height: 720 pix Depth: 1 Colour channels: 3&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;plot(dj, axes = FALSE)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/imager_files/figure-html/unnamed-chunk-2-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://blog.hoxo-m.com/post/imager_files/figure-html/unnamed-chunk-2-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class=&#34;section level3&#34;&gt;
 &lt;h3&gt;画像上に図形を表示する&lt;/h3&gt;
@@ -555,7 +612,7 @@ print(dj)&lt;/code&gt;&lt;/pre&gt;
 highlight(px.circle(r = 40, x = 300, y = 720), col = &amp;quot;orange&amp;quot;)
 highlight(px.diamond(r = 40, x = 600, y = 350), col = &amp;quot;green&amp;quot;)
 highlight(px.square(r = 40, x = width(dj)*2, y = height(dj)), col = &amp;quot;black&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/imager_files/figure-html/unnamed-chunk-3-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://blog.hoxo-m.com/post/imager_files/figure-html/unnamed-chunk-3-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class=&#34;section level3&#34;&gt;
 &lt;h3&gt;画像上にテキストを表示する&lt;/h3&gt;
@@ -563,16 +620,16 @@ highlight(px.square(r = 40, x = width(dj)*2, y = height(dj)), col = &amp;quot;bl
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;par(family=&amp;quot;Hiragino Kaku Gothic Pro W6&amp;quot;)
 plot(dj, axes = FALSE)
 text(x = width(dj)/2, y = height(dj)-100, labels = &amp;quot;キュッキュキュッキュ&amp;quot;, col = &amp;quot;orange&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/imager_files/figure-html/unnamed-chunk-4-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://blog.hoxo-m.com/post/imager_files/figure-html/unnamed-chunk-4-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class=&#34;section level3&#34;&gt;
 &lt;h3&gt;画像を切り取る&lt;/h3&gt;
 &lt;p&gt;画像の一部を切り取るにはimsub()を用います。 画像の範囲指定には条件式が利用できます。 &lt;code&gt;%inr%&lt;/code&gt;演算子を用いると矩形で範囲指定できます。&lt;/p&gt;
 &lt;p&gt;なお、ここで&lt;code&gt;%&amp;gt;%&lt;/code&gt;演算子を用いていますがこれはパイプ演算子と呼ばれるものであり、演算子左側の操作を右側の操作に受け渡すものです。&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;dj %&amp;gt;% imsub(x &amp;gt; width(dj)/2) %&amp;gt;% plot(axes = TRUE) # 画像右半分を切り取る&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/imager_files/figure-html/unnamed-chunk-5-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://blog.hoxo-m.com/post/imager_files/figure-html/unnamed-chunk-5-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;dj %&amp;gt;% imsub(x %inr% c(411,722), y %inr% c(67,349)) %&amp;gt;% plot(axes = TRUE) # 矩形による範囲指定&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/imager_files/figure-html/unnamed-chunk-5-2.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://blog.hoxo-m.com/post/imager_files/figure-html/unnamed-chunk-5-2.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;この操作はインタラクティブに行うことも可能です。 この際はgrabRect()を用います。 表示された画像に対して、矩形で範囲指定すると、画像左上端と右下端の点の座標が返されます。&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;grabRect(dj) # インタラクティブな範囲指定
 # 以下のような結果が返される。
@@ -583,14 +640,14 @@ text(x = width(dj)/2, y = height(dj)-100, labels = &amp;quot;キュッキュキ�
 &lt;h3&gt;画像をぼかす&lt;/h3&gt;
 &lt;p&gt;ちょっとおじさんの画像ばかり見ていると目が辛くなってきましたね。 画像をぼかしてみましょう。 画像をぼかすにはisoblur()を用います。 &lt;code&gt;sigma&lt;/code&gt;の値を大きくすればするほど画像はぼかされていきます。&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;dj %&amp;gt;% isoblur(sigma = 15) %&amp;gt;% plot(axes =FALSE)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/imager_files/figure-html/unnamed-chunk-7-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://blog.hoxo-m.com/post/imager_files/figure-html/unnamed-chunk-7-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class=&#34;section level3&#34;&gt;
 &lt;h3&gt;クソコラ実践&lt;/h3&gt;
 &lt;p&gt;さて、ここまでの操作を用いてクソコラを作ってみましょう。 クソコラを作る前にここで別のおじさんを投入します。 こちらもCC0で公開されている画像です。桜が満開ですね。&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ojisan &amp;lt;- load.image(&amp;quot;https://raw.githubusercontent.com/dichika/ojisan/master/sakura4.jpg&amp;quot;) # 別のおじさん
 plot(ojisan, axes = FALSE)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/imager_files/figure-html/unnamed-chunk-8-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://blog.hoxo-m.com/post/imager_files/figure-html/unnamed-chunk-8-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;この画像とDJタカヤナギ=サンの画像を用いて、クソコラを作ります。 まずresize()を用いて、2つの画像のサイズを揃えます。&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;dj_mod &amp;lt;- dj %&amp;gt;% resize(size_x = 500, size_y = 500)
 ojisan_mod &amp;lt;- ojisan %&amp;gt;% resize(size_x = 500, size_y = 500)&lt;/code&gt;&lt;/pre&gt;
@@ -619,25 +676,25 @@ bbox &amp;lt;- result[[1]]$faceRectangle
 ojisan_sub &amp;lt;- ojisan_mod %&amp;gt;% imsub(x %inr% c(bbox$left, bbox$left + bbox$width),
                                    y %inr% c(bbox$top, bbox$top + bbox$height))
 plot(ojisan_sub, axes = FALSE)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/imager_files/figure-html/unnamed-chunk-12-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://blog.hoxo-m.com/post/imager_files/figure-html/unnamed-chunk-12-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;抽出した顔画像をDJタカヤナギ=サンの画像に重ねてみましょう。 isoblur()でぼかした後、imdraw()で画像を重ねています。 これはこれで味わい深いですが、ちょっと顔画像が大きいですね。&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ojisan_blur &amp;lt;- ojisan_sub %&amp;gt;% isoblur(sigma = 5)
 ojisan_pos_x &amp;lt;- 100
 ojisan_pos_y &amp;lt;- 200
 dj_ojisan &amp;lt;- dj %&amp;gt;% imdraw(ojisan_blur, x = ojisan_pos_x, y = ojisan_pos_y, opacity = 0.9)
 plot(dj_ojisan, axes = FALSE)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/imager_files/figure-html/unnamed-chunk-13-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://blog.hoxo-m.com/post/imager_files/figure-html/unnamed-chunk-13-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;imresize()でscaleを50%に指定して縮小して重ねることにします。 だいぶ自然なクソコラになってきましたね。&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ojisan_blur_half &amp;lt;- ojisan_sub %&amp;gt;% isoblur(sigma = 5) %&amp;gt;% imresize(scale = 0.5)
 dj_ojisan2 &amp;lt;- dj %&amp;gt;% imdraw(ojisan_blur_half, x = ojisan_pos_x, y = ojisan_pos_y, opacity = 0.9)
 plot(dj_ojisan2, axes = FALSE)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/imager_files/figure-html/unnamed-chunk-14-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://blog.hoxo-m.com/post/imager_files/figure-html/unnamed-chunk-14-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;それでは最後の仕上げです。 わかりやすいように赤い円で強調し文字を加えます。&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;par(family=&amp;quot;Hiragino Kaku Gothic Pro W6&amp;quot;)
 plot(dj_ojisan2, axes = FALSE)
 highlight(px.circle(r = bbox$width*0.5*1.1, x = ojisan_pos_x*2.6, y = ojisan_pos_y*2.5), col = &amp;quot;red&amp;quot;)
 text(x = width(dj)/2, y = height(dj)-100, labels = &amp;quot;おわかりいただけただろうか&amp;quot;, col = &amp;quot;white&amp;quot;, cex = 1.2)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/imager_files/figure-html/unnamed-chunk-15-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://blog.hoxo-m.com/post/imager_files/figure-html/unnamed-chunk-15-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;いかがでしたか？ Rだけで自然な心霊写真が作れましたね。&lt;/p&gt;
 &lt;p&gt;今回使った&lt;code&gt;imager&lt;/code&gt;パッケージの機能はどれも基本的なものです。 公式サイトには充実した機能紹介があります。ぜひ参考にして皆さんもクソコラ製作を効率化してみてください。&lt;/p&gt;
 &lt;ul&gt;
@@ -937,16 +994,6 @@ teramonagi()&lt;/code&gt;&lt;/pre&gt;
 &lt;h2 id=&#34;school&#34;&gt;School&lt;/h2&gt;
 
 &lt;p&gt;Sed quis pulvinar nisi, sed dapibus lacus. Mauris tempus ex ut ipsum facilisis interdum. Integer feugiat urna sed feugiat tempor. Quisque dictum vestibulum feugiat. Nunc nec est volutpat lorem imperdiet egestas sit amet ut orci. Aliquam venenatis neque ipsum, a placerat lectus cursus at. Donec pellentesque tellus hendrerit faucibus posuere. Etiam gravida consequat lectus, volutpat consectetur velit convallis nec. Praesent sagittis luctus dignissim.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>お問い合わせ</title>
-      <link>http://blog.hoxo-m.com/page/contact/</link>
-      <pubDate>Fri, 03 Apr 2015 02:13:50 +0000</pubDate>
-      
-      <guid>http://blog.hoxo-m.com/page/contact/</guid>
-      <description>&lt;div class=&#34;google-form&#34;&gt;&lt;iframe src=&#34;https://docs.google.com/forms/d/e/1FAIpQLSeu1juP3SLIG9Ll1moclNrdAgkViXSIKUoviuy9cJVGn5M1Ew/viewform?embedded=true&#34; width=&#34;800&#34; height=&#34;600&#34; frameborder=&#34;0&#34; style=&#34;border:0&#34;&gt;Loading ...&lt;/iframe&gt;&lt;/div&gt;
 </description>
     </item>
     
