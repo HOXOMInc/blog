@@ -8,7 +8,7 @@
     <language>ja-JP</language>
     <copyright>HOXOM, Inc.</copyright>
     <lastBuildDate>Sun, 07 May 2017 21:00:00 -0900</lastBuildDate>
-    <atom:link href="/tags/r/" rel="self" type="application/rss+xml" />
+    <atom:link href="http://blog.hoxo-m.com/tags/r/" rel="self" type="application/rss+xml" />
     
     <item>
       <title>「東京ベイエリア・タワーマンション地図」の作成</title>
@@ -16,11 +16,7 @@
       <pubDate>Sun, 07 May 2017 21:00:00 -0900</pubDate>
       
       <guid>http://blog.hoxo-m.com/2017/05/07/tokyo-bay-area-tower-map/</guid>
-      <description>&lt;!-- BLOGDOWN-BODY-BEFORE
-
-/BLOGDOWN-BODY-BEFORE --&gt;
-
-&lt;div class=&#34;section level2&#34;&gt;
+      <description>&lt;div class=&#34;section level2&#34;&gt;
 &lt;h2&gt;はじめに&lt;/h2&gt;
 &lt;p&gt;キュッキュキュッキュ🎧こんばんはDJタカヤナギです😤。&lt;/p&gt;
 &lt;p&gt;今日で連休が終わるという方が大半なのではないでしょうか？ 長い連休明けの月曜日はいつだって嫌なものですね。&lt;/p&gt;
@@ -48,21 +44,10 @@
 &lt;div class=&#34;section level2&#34;&gt;
 &lt;h2&gt;東京ベイエリア・タワーマンション地図&lt;/h2&gt;
 &lt;p&gt;出来上がった結果がこちらです。ベイエリアと言いながら街中まで入ってしまっているのを除くのは読者への課題とします。&lt;/p&gt;
-&lt;p&gt;また、&lt;a href=&#34;/post/tokyo-bay-area-tower-map_files/map.html&#34;&gt;こちら&lt;/a&gt;に飛べば全画面にて表示されます。&lt;/p&gt;
+&lt;p&gt;また、&lt;a href=&#34;http://blog.hoxo-m.com/post/tokyo-bay-area-tower-map_files/map.html&#34;&gt;こちら&lt;/a&gt;に飛べば全画面にて表示されます。&lt;/p&gt;
 &lt;p&gt;Enjoy!!!&lt;/p&gt;
-&lt;iframe src=&#34;/post/tokyo-bay-area-tower-map_files/map.html&#34; name=&#34;in&#34; width=&#34;800&#34; height=&#34;600&#34;&gt;
+&lt;iframe src=&#34;http://blog.hoxo-m.com/post/tokyo-bay-area-tower-map_files/map.html&#34; name=&#34;in&#34; width=&#34;800&#34; height=&#34;600&#34;&gt;
 &lt;/div&gt;
-
-
-
-&lt;!-- BLOGDOWN-HEAD
-
-
-
-
-
-
-/BLOGDOWN-HEAD --&gt;
 </description>
     </item>
     
