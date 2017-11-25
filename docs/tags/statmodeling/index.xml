@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Statmodeling on 株式会社ホクソエムのブログ</title>
-    <link>/tags/statmodeling/</link>
+    <link>http://blog.hoxo-m.com/tags/statmodeling/</link>
     <description>Recent content in Statmodeling on 株式会社ホクソエムのブログ</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-JP</language>
     <copyright>HOXOM, Inc.</copyright>
-    <lastBuildDate>Sat, 25 Nov 2017 11:02:11 -0900</lastBuildDate>
-    <atom:link href="/tags/statmodeling/" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 25 Nov 2017 10:00:00 +0900</lastBuildDate>
+    <atom:link href="http://blog.hoxo-m.com/tags/statmodeling/" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Rユーザ会でStanの紹介と応用事例について話しました</title>
-      <link>/2017/11/25/userjp2017/</link>
-      <pubDate>Sat, 25 Nov 2017 11:02:11 -0900</pubDate>
+      <link>http://blog.hoxo-m.com/2017/11/25/userjp2017/</link>
+      <pubDate>Sat, 25 Nov 2017 10:00:00 +0900</pubDate>
       
-      <guid>/2017/11/25/userjp2017/</guid>
+      <guid>http://blog.hoxo-m.com/2017/11/25/userjp2017/</guid>
       <description>&lt;p&gt;Rユーザ会＠統計数理研究所で「StanとRでベイズ統計モデリング」について発表しました。資料は以下です。&lt;/p&gt;
 &lt;iframe src=&#34;//www.slideshare.net/slideshow/embed_code/key/wRK0vQHcWxFyLq&#34; width=&#34;595&#34; height=&#34;485&#34; frameborder=&#34;0&#34; marginwidth=&#34;0&#34; marginheight=&#34;0&#34; scrolling=&#34;no&#34; style=&#34;border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;&#34; allowfullscreen&gt;
 &lt;/iframe&gt;

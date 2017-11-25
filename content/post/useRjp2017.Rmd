@@ -1,7 +1,7 @@
 ---
 title: "Rユーザ会でStanの紹介と応用事例について話しました"
 author: "Kentaro Matsuura"
-date: 2017-11-25T11:02:11-09:00
+date: 2017-11-25T10:00:00+09:00
 tags: ["conference","statmodeling"]
 ---
 
