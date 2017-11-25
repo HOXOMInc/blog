@@ -11,7 +11,7 @@ knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
 
 Rユーザ会＠統計数理研究所で「StanとRでベイズ統計モデリング」について発表しました。資料は以下です。
 
-<iframe src="//www.slideshare.net/slideshow/embed_code/key/jIa3ZhVrgBOgW4" width="595" height="485" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe> <div style="margin-bottom:5px"> <strong> <a href="//www.slideshare.net/secret/jIa3ZhVrgBOgW4" title="Stanの紹介と応用事例（age heapingの統計モデル）" target="_blank">Stanの紹介と応用事例（age heapingの統計モデル）</a> </strong> from <strong><a href="https://www.slideshare.net/berobero11" target="_blank">Kentaro Matsuura</a></strong> </div>
+<iframe src="//www.slideshare.net/slideshow/embed_code/key/wRK0vQHcWxFyLq" width="595" height="485" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe> <div style="margin-bottom:5px"> <strong> <a href="//www.slideshare.net/berobero11/stanage-heaping" title="Stanの紹介と応用事例（age heapingの統計モデル）" target="_blank">Stanの紹介と応用事例（age heapingの統計モデル）</a> </strong> from <strong><a href="https://www.slideshare.net/berobero11" target="_blank">Kentaro Matsuura</a></strong> </div>
 
 Rには詳しいがStanをほとんど知らない人たちへのStan紹介と、（空間）統計モデリングに詳しい人たちへのちょっと凝った応用事例の二部構成にしたため、易しい部分とかなり難しい部分のどっちつかずの内容になりました。ありがち。藤野さんをはじめとする皆様、ありがとうございました！
 
