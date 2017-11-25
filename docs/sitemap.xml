@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>http://blog.hoxo-m.com/2017/11/25/userjp2017/</loc>
+    <lastmod>2017-11-25T10:00:00+09:00</lastmod>
+  </url>
+  
+  <url>
     <loc>http://blog.hoxo-m.com/2017/07/18/aws_s3_intro/</loc>
     <lastmod>2017-07-18T21:02:11-09:00</lastmod>
   </url>
@@ -70,7 +75,7 @@
   
   <url>
     <loc>http://blog.hoxo-m.com/tags/conference/</loc>
-    <lastmod>2017-04-08T21:32:00-09:00</lastmod>
+    <lastmod>2017-11-25T10:00:00+09:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -88,7 +93,7 @@
   
   <url>
     <loc>http://blog.hoxo-m.com/post/</loc>
-    <lastmod>2017-07-18T21:02:11-09:00</lastmod>
+    <lastmod>2017-11-25T10:00:00+09:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -123,6 +128,12 @@
   </url>
   
   <url>
+    <loc>http://blog.hoxo-m.com/tags/statmodeling/</loc>
+    <lastmod>2017-11-25T10:00:00+09:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>http://blog.hoxo-m.com/tags/</loc>
     <lastmod>2017-07-18T21:02:11-09:00</lastmod>
     <priority>0</priority>
@@ -142,7 +153,7 @@
   
   <url>
     <loc>http://blog.hoxo-m.com/</loc>
-    <lastmod>2017-07-18T21:02:11-09:00</lastmod>
+    <lastmod>2017-11-25T10:00:00+09:00</lastmod>
     <priority>0</priority>
   </url>
   
